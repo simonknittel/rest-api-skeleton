@@ -36,12 +36,6 @@ DB_NAME=rest-api-skeleton \
 JWT_SECRET=secret \
 ADMIN_LOGIN=admin \
 ADMIN_PASS=admin \
-TW_CONSUMER_KEY= \
-TW_CONSUMER_SECRET= \
-TW_ACCESS_TOKEN= \
-TW_ACCESS_TOKEN_SECRET= \
-FB_APP_ID= \
-FB_APP_SECRET= \
 npm start
 ```
 

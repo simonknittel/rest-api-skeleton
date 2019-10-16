@@ -5,6 +5,11 @@
     "start": "node --experimental-modules ./src/index.mjs",
     "test": "jest"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
+    }
+  },
   "dependencies": {
     "bcrypt": "^3.0.6",
     "compression": "^1.7.4",
@@ -20,6 +25,8 @@
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "babel-jest": "^24.8.0",
-    "jest": "^24.8.0"
+    "husky": "^3.0.3",
+    "jest": "^24.8.0",
+    "request": "^2.88.0"
   }
 }

@@ -23,7 +23,7 @@ export default function registerRoute(req, res) {
           email: req.body.login.trim(),
           password: hash
         })
-        .then(() => { res.end() })
+        .then(() => res.end())
         .catch(err => {
           console.error(err)
           res

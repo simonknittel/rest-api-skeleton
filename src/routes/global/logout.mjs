@@ -23,7 +23,7 @@ export default function login(req, res) {
     // Add token to blacklist -> Prevent token to be used in the future
     JWTBlacklist
       .create({ token })
-      .then(() => { res.end() })
+      .then(() => res.end())
       .catch(err => {
         if (err.name === 'SequelizeUniqueConstraintError') {
           res.end()

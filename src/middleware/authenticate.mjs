@@ -5,8 +5,9 @@ import JWTBlacklist from '../models/JWTBlacklist'
 export default function authenticate(req, res, next) {
   const authHeader = req.header('Authorization')
   if (!authHeader || authHeader.indexOf('Bearer') !== 0) {
-    res.status(401)
-    res.send('No or invalid Authorization header found.')
+    res
+      .status(401)
+      .send('No or invalid Authorization header found.')
     return
   }
 
@@ -16,15 +17,16 @@ export default function authenticate(req, res, next) {
     .findOne({ where: { token } })
     .then(result => {
       if (result !== null) {
-        res.status(401)
-        res.send('Invalid token.')
-        return
+        return res
+          .status(401)
+          .send('Invalid token.')
       }
 
       jwt.verify(token, config.jwt.secret, (err, decoded) => {
         if (err) {
-          res.status(401)
-          res.send('No or invalid Authorization header found.')
+          res
+            .status(401)
+            .send('No or invalid Authorization header found.')
           return
         }
 
@@ -35,7 +37,8 @@ export default function authenticate(req, res, next) {
     })
     .catch(err => {
       console.error(err)
-      res.status(500)
-      res.end()
+      res
+        .status(500)
+        .end()
     })
 }

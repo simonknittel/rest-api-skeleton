@@ -3,10 +3,7 @@ import helmet from 'helmet'
 import compression from 'compression'
 
 // Router
-import generalRouter from './routes/general'
-import rssRouter from './routes/rss'
-import twitterRouter from './routes/twitter'
-import facebookRouter from './routes/facebook'
+import globalRouter from './routes/global'
 
 // Models
 import './models'
@@ -32,15 +29,12 @@ app.use(helmet({
 
 app.use(compression())
 
-// General routes
-app.use('/', generalRouter)
-app.use('/rss', rssRouter)
-app.use('/twitter', twitterRouter)
-app.use('/facebook', facebookRouter)
+// Global routes
+app.use('/', globalRouter)
 
 // Start server
 sequelize.sync().then(() => {
-  app.listen(3000, () => {
+  app.listen(8000, () => {
     console.log('Server is running.')
   })
 })

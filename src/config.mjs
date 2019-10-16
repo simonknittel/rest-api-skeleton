@@ -1,3 +1,14 @@
+const missingConfig = [];
+
+if (!process.env.DB_HOST) missingConfig.push('DB_HOST')
+if (!process.env.DB_USER) missingConfig.push('DB_USER')
+if (!process.env.DB_PASS) missingConfig.push('DB_PASS')
+if (!process.env.DB_NAME) missingConfig.push('DB_NAME')
+
+if (!process.env.JWT_SECRET) missingConfig.push('JWT_SECRET')
+
+if (missingConfig.length > 0) throw Error('Config missing: ' + missingConfig.join(', '))
+
 const config = {
   db: {
     host: process.env.DB_HOST,
@@ -8,17 +19,7 @@ const config = {
   jwt: {
     secret: process.env.JWT_SECRET
   },
-  saltRounds: 11,
-  twitter: {
-    consumerKey: process.env.TW_CONSUMER_KEY,
-    consumerSecret: process.env.TW_CONSUMER_SECRET,
-    accessToken: process.env.TW_ACCESS_TOKEN,
-    accessTokenSecret: process.env.TW_ACCESS_TOKEN_SECRET
-  },
-  facebook: {
-    appId: process.env.FB_APP_ID,
-    appSecret: process.env.FB_APP_SECRET
-  }
+  saltRounds: 11
 }
 
 export default config

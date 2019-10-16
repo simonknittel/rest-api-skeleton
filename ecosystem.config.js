@@ -5,6 +5,9 @@ module.exports = {
     node_args: '-r esm',
     autorestart: true,
     watch: true,
+    ignore_watch: [
+      'node_modules',
+    ],
     max_memory_restart: '1G',
     env: {
       NODE_ENV: 'development',
@@ -14,7 +17,7 @@ module.exports = {
       DB_NAME: 'rest-api-skeleton',
       JWT_SECRET: 'secret',
       ADMIN_LOGIN: 'admin',
-      ADMIN_PASS: 'admin'
+      ADMIN_PASS: 'admin',
     }
   }]
 };
