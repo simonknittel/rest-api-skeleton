@@ -20,4 +20,4 @@ module.exports = {
       ADMIN_PASS: 'admin',
     }
   }]
-};
+}

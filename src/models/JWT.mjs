@@ -1,9 +1,9 @@
 import Sequelize from 'sequelize'
 import sequelize from '../db'
 
-class JWTBlacklist extends Sequelize.Model {}
+class JWT extends Sequelize.Model {}
 
-JWTBlacklist.init({
+JWT.init({
   token: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -11,7 +11,7 @@ JWTBlacklist.init({
   }
 }, {
   sequelize,
-  modelName: 'jwtBlacklist'
+  modelName: 'JWT'
 })
 
-export default JWTBlacklist
+export default JWT

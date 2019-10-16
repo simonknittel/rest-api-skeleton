@@ -1,7 +1,12 @@
+// Dependencies
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+
 import config from '../../config'
+
+// Models
 import User from '../../models/User'
+import JWT from '../../models/JWT'
 
 export default function login(req, res) {
   if (
@@ -51,7 +56,15 @@ export default function login(req, res) {
           // Create token
           const token = jwt.sign({ userId: user.id }, config.jwt.secret)
 
-          res.send(token)
+          JWT
+            .create({ token })
+            .then(() => res.send(token))
+            .catch(err => {
+              console.error(err)
+              res
+                .status(500)
+                .end()
+            })
         })
     })
     .catch(err => {

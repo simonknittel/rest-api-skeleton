@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import config from '../config'
-import JWTBlacklist from '../models/JWTBlacklist'
+import JWT from '../models/JWT'
 
 export default function authenticate(req, res, next) {
   const authHeader = req.header('Authorization')
@@ -13,13 +13,13 @@ export default function authenticate(req, res, next) {
 
   const token = authHeader.slice(7)
 
-  JWTBlacklist
+  JWT
     .findOne({ where: { token } })
     .then(result => {
-      if (result !== null) {
+      if (result === null) {
         return res
           .status(401)
-          .send('Invalid token.')
+          .send('No or invalid Authorization header found.')
       }
 
       jwt.verify(token, config.jwt.secret, (err, decoded) => {
