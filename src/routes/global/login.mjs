@@ -8,69 +8,66 @@ import config from '../../config'
 import User from '../../models/User'
 import JWT from '../../models/JWT'
 
-export default function login(req, res) {
-  if (
-    !req.body.login
-    || !req.body.password
-    || req.body.login.trim().length <= 0
-    || req.body.password.length <= 0
-  ) {
-    res
-      .status(400)
-      .json({ error: {id: 1, msg: 'E-mail address or password missing.'} })
-    return
-  }
-
-  // Bypass login with admin credentials
-  if (
-    process.env.NODE_ENV === 'development'
-    && req.body.login.trim() === process.env.ADMIN_LOGIN
-    && req.body.password === process.env.ADMIN_PASS
-  ) {
-    const token = jwt.sign({ userId: 0 }, config.jwt.secret)
-    res.send(token)
-    return
-  }
-
-  // Search for real user
-  User
-    .findOne({ where: { email: req.body.login.trim() } })
-    .then(user => {
-      if (user === null) {
+export default function loginRoute(req, res) {
+  login(req.body.login, req.body.password)
+    .then(token => res.send(token))
+    .catch((err) => {
+      if (err.type === 1) {
+        res
+          .status(400)
+          .json({ error: {id: 1, msg: 'E-mail address or password missing.'} })
+      } else if (err.type === 2) {
         res
           .status(401)
           .json({ error: {id: 2, msg: 'E-mail address or password wrong.'} })
-        return
+      } else if (err.type === 3) {
+        console.error(err.data)
+        res
+          .status(500)
+          .end()
+      }
+    })
+}
+
+function login(login, password) {
+  return new Promise((resolve, reject) => {
+    if (
+        !login
+        || !password
+        || login.trim().length <= 0
+        || password.length <= 0
+      ) return reject({ type: 1 })
+
+      // Bypass login with admin credentials
+      if (
+        process.env.NODE_ENV === 'development'
+        && login.trim() === process.env.ADMIN_LOGIN
+        && password === process.env.ADMIN_PASS
+      ) {
+        const token = jwt.sign({ userId: 0 }, config.jwt.secret)
+        return resolve(token)
       }
 
-      bcrypt
-        .compare(req.body.password, user.password)
-        .then(result => {
-          if (result === false) {
-            res
-              .status(401)
-              .json({ error: {id: 2, msg: 'E-mail address or password wrong.'} })
-            return
-          }
+      // Search for real user
+      User
+        .findOne({ where: { email: login.trim() } })
+        .then(user => {
+          if (user === null) return reject({ type: 2 })
 
-          // Create token
-          const token = jwt.sign({ userId: user.id }, config.jwt.secret)
+          bcrypt
+            .compare(password, user.password)
+            .then(result => {
+              if (result === false) return reject({ type: 2 })
 
-          JWT
-            .create({ token })
-            .then(() => res.send(token))
-            .catch(err => {
-              console.error(err)
-              res
-                .status(500)
-                .end()
+              // Create token (expires in 31 days / 1 month)
+              const token = jwt.sign({ userId: user.id }, config.jwt.secret, { expiresIn: '31d' })
+
+              JWT
+                .create({ token })
+                .then(() => resolve(token))
+                .catch(err => reject({ type: 3, data: err }))
             })
         })
-    })
-    .catch(err => {
-      console.error(err)
-      res
-        .status(500)
-        .end()
-    })
+        .catch(err => reject({ type: 3, data: err }))
+  })
 }
