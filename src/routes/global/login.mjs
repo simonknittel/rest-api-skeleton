@@ -10,7 +10,14 @@ import JWT from '../../models/JWT'
 
 export default function loginRoute(req, res) {
   login(req.body.login, req.body.password)
-    .then(token => res.send(token))
+    .then(token => {
+      res
+        .cookie('jwt', token, {
+          httpOnly: true,
+          maxAge: 1000 * 60 * 60 * 24 * 31 // 31 days / 1 month
+        })
+        .send()
+    })
     .catch((err) => {
       if (err.type === 1) {
         res

@@ -3,15 +3,14 @@ import config from '../config'
 import JWT from '../models/JWT'
 
 export default function authenticateMiddleware(req, res, next) {
-  const authHeader = req.header('Authorization')
-  if (!authHeader || authHeader.indexOf('Bearer') !== 0) {
+  if (!req.cookies.jwt) {
     res
       .status(401)
-      .send('No or invalid Authorization header found.')
+      .send('No or invalid token for authorization found.')
     return
   }
 
-  const token = authHeader.slice(7)
+  const token = req.cookies.jwt
 
   authenticate(token)
     .then(userId => {
@@ -22,7 +21,7 @@ export default function authenticateMiddleware(req, res, next) {
       if (err.type === 1) {
         res
           .status(401)
-          .send('No or invalid Authorization header found.')
+          .send('No or invalid token for authorization found.')
       } else if (err.type === 2) {
         console.error(err.data)
         res

@@ -1,6 +1,7 @@
 import express from 'express'
 import helmet from 'helmet'
 import compression from 'compression'
+import cookieParser from 'cookie-parser'
 
 // Router
 import globalRouter from './routes/global'
@@ -13,6 +14,7 @@ import sequelize from './db'
 const app = express()
 
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 
 // TODO: Maybe replace with individual dependencies
 app.use(helmet({
