@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
-import config from '../../config'
-import JWT from '../../models/JWT'
+import config from '../../config.mjs'
+import Session from '../../models/Session.mjs'
 
 export default function login(req, res) {
   const authHeader = req.header('Authorization')
@@ -20,8 +20,8 @@ export default function login(req, res) {
       return
     }
 
-    JWT
-      .destroy({ where: token })
+    Session
+      .destroy({ where: { token } })
       .then(() => res.end())
       .catch(err => {
         console.error(err.name)

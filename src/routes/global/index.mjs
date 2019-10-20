@@ -1,21 +1,25 @@
 import express from 'express'
 
 // Middleware
-import allowedMethods from '../../middleware/allowedMethods'
-import authenticateMiddleware from '../../middleware/authenticate'
-import checkPermissionsMiddleware from '../../middleware/checkPermissions'
+import allowedMethods from '../../middleware/allowedMethods.mjs'
+import authenticateMiddleware from '../../middleware/authenticate.mjs'
+import checkPermissionsMiddleware from '../../middleware/checkPermissions.mjs'
 
 // Routes
-import loginRoute from './login'
-import logoutRoute from './logout'
-import registerRoute from './register'
-import robotsTxtRoute from './robots.txt';
+import loginRoute from './login.mjs'
+import logoutRoute from './logout.mjs'
+import registerRoute from './register.mjs'
+import verifyEmailRoute from './verify-email.mjs'
+import robotsTxtRoute from './robots.txt.mjs'
 
 const generalRouter = express.Router()
 
+generalRouter.route('/').get((req, res) => res.end())
+
 generalRouter.route('/login').post(loginRoute).all(allowedMethods(['POST']))
 generalRouter.route('/logout').get(logoutRoute).all(allowedMethods(['GET']))
-generalRouter.route('/register').post(authenticateMiddleware, checkPermissionsMiddleware([1]), registerRoute).all(allowedMethods(['POST']))
+generalRouter.route('/register').post(registerRoute).all(allowedMethods(['POST']))
+generalRouter.route('/verify-email').get(verifyEmailRoute).all(allowedMethods(['GET']))
 
 // Some special routes
 generalRouter.route('/robots.txt').get(robotsTxtRoute).all(allowedMethods(['GET']))

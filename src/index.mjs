@@ -4,12 +4,13 @@ import compression from 'compression'
 import cookieParser from 'cookie-parser'
 
 // Router
-import globalRouter from './routes/global'
+import globalRouter from './routes/global/index.mjs'
 
 // Models
-import './models'
+import './models/index.mjs'
 
-import sequelize from './db'
+import config from './config.mjs'
+import sequelize from './db.mjs'
 
 const app = express()
 
@@ -36,7 +37,7 @@ app.use('/', globalRouter)
 
 // Start server
 sequelize.sync().then(() => {
-  app.listen(8000, () => {
+  app.listen(config.port, () => {
     console.log('Server is running.')
   })
 })

@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize'
-import sequelize from '../db'
+import sequelize from '../db.mjs'
 
 class User extends Sequelize.Model {}
 
@@ -7,20 +7,24 @@ User.init({
   email: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   password: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   rank: {
     type: Sequelize.INTEGER,
+    defaultValue: 0,
+  },
+  emailVerified: {
+    type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: 0
-  }
+    defaultValue: false,
+  },
 }, {
   sequelize,
-  modelName: 'user'
+  modelName: 'user',
 })
 
 export default User

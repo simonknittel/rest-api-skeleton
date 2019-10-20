@@ -4,50 +4,24 @@
 
 _TODO: Add description_
 
-## One-time setup
+## Features
 
-1. Update Homebrew: `brew update && brew upgrade`
-2. Install the database (PostgreSQL) with Homebrew: `brew install postgres`
-3. Create a database cluster for PostgreSQL: `initdb /usr/local/var/postgres`
-4. Create a new database user: `/usr/local/opt/postgres/bin/createuser -s postgres`
-5. Start the database: `pg_ctl -D /usr/local/var/postgres start`
-6. Create a database with PostgreSQL: `createdb rest-api-skeleton`
-7. Get the required Node.js version: `nvm install && nvm use`
-8. Install dependencies: `npm install`
-9. Install PM2: `npm install -g pm2`
+* Users can register an account with email and password
+* Users have to verify their email to be able to log in
+* Users can log in and log out
+* Users can get a permission role assigned
+* Individual routes can be secured with permission roles
+* Uses Mailgun as email service
+* Runs a PostgreSQL database and uses Sequelize as ORM
+* Sessions are handled via a JWT stored in a cookie
+* For each session the user agent if transmitted is saved in the database
+* Fully dockerized
 
 
 ## During development
 
-1. Start the database:
-```
-pg_ctl -D /usr/local/var/postgres start
-```
-2. Start the application:
-```
-pm2 start --no-daemon
+_TODO: Add instructions_
 
-or
-
-DB_HOST=localhost \
-DB_USER=postgres \
-DB_PASS= \
-DB_NAME=rest-api-skeleton \
-JWT_SECRET=secret \
-ADMIN_LOGIN=admin \
-ADMIN_PASS=admin \
-npm start
-```
-
-
-## Other
-
-* [pgAdmin](https://www.pgadmin.org/)
-* Development database credentials:
-  * Host: localhost:5432
-  * User: postgres (defined during the setup in step 4)
-  * Pass: _none_
-  * Name: rest-api-skeleton (defined during the setup in step 6)
 
 ## 🎁 Support
 

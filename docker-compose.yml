@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  api:
+    build: .
+    depends_on:
+      - database
+    ports:
+      - "8000:8000"
+    env_file: .env
+    restart: always
+
+  database:
+    image: postgres:12.0-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"

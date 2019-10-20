@@ -2,14 +2,16 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-import config from '../../config'
+import config from '../../config.mjs'
 
 // Models
-import User from '../../models/User'
-import JWT from '../../models/JWT'
+import User from '../../models/User.mjs'
+import Session from '../../models/Session.mjs'
 
 export default function loginRoute(req, res) {
-  login(req.body.login, req.body.password)
+  const userAgent = req.headers['user-agent'] ? req.headers['user-agent'] : null
+
+  login(req.body.login, req.body.password, userAgent)
     .then(token => {
       res
         .cookie('jwt', token, {
@@ -32,11 +34,15 @@ export default function loginRoute(req, res) {
         res
           .status(500)
           .end()
+      } else if (err.type === 4) {
+        res
+          .status(401)
+          .json({ error: {id: 4, msg: 'E-mail address is not yet verified.'} })
       }
     })
 }
 
-function login(login, password) {
+function login(login, password, userAgent = null) {
   return new Promise((resolve, reject) => {
     if (
         !login
@@ -66,11 +72,13 @@ function login(login, password) {
             .then(result => {
               if (result === false) return reject({ type: 2 })
 
+              if (!user.emailVerified) return reject({ type: 4 })
+
               // Create token (expires in 31 days / 1 month)
               const token = jwt.sign({ userId: user.id }, config.jwt.secret, { expiresIn: '31d' })
 
-              JWT
-                .create({ token })
+              Session
+                .create({ token, userAgent })
                 .then(() => resolve(token))
                 .catch(err => reject({ type: 3, data: err }))
             })

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
-import config from '../config'
-import JWT from '../models/JWT'
+import config from '../config.mjs'
+import Session from '../models/Session.mjs'
 
 export default function authenticateMiddleware(req, res, next) {
   if (!req.cookies.jwt) {
@@ -33,8 +33,8 @@ export default function authenticateMiddleware(req, res, next) {
 
 function authenticate(token) {
   return new Promise((resolve, reject) => {
-    JWT
-      .findOne({ where: { token } })
+    Session
+      .findOne({ where: { jwt: token } })
       .then(result => {
         if (result === null) return reject({ type: 1 })
 
@@ -43,6 +43,6 @@ function authenticate(token) {
           resolve(decoded.userId)
         })
       })
-      .catch(err => reject({ type: 2, data: err })
+      .catch(err => reject({ type: 2, data: err }))
   })
 }
