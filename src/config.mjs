@@ -35,6 +35,12 @@ const config = {
     key: process.env.MAILGUN_KEY,
     from: process.env.MAILGUN_FROM,
   },
+  uploads: {
+    avatars: {
+      localTmp: 'uploads/avatars/',
+      cloudinaryFolder: 'rest-api-skeleton/avatars/',
+    },
+  },
 }
 
 export default config

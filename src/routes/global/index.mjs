@@ -1,5 +1,7 @@
 import express from 'express'
 
+import config from '../../config.mjs'
+
 // Middleware
 import allowedMethods from '../../middleware/allowedMethods.mjs'
 import authenticateMiddleware from '../../middleware/authenticate.mjs'
@@ -11,6 +13,7 @@ import logoutRoute from './logout.mjs'
 import registerRoute from './register.mjs'
 import verifyEmailRoute from './verify-email.mjs'
 import robotsTxtRoute from './robots.txt.mjs'
+import uploadAvatarRoute from './upload-avatar.mjs'
 
 const generalRouter = express.Router()
 
@@ -20,6 +23,9 @@ generalRouter.route('/login').post(loginRoute).all(allowedMethods(['POST']))
 generalRouter.route('/logout').get(logoutRoute).all(allowedMethods(['GET']))
 generalRouter.route('/register').post(registerRoute).all(allowedMethods(['POST']))
 generalRouter.route('/verify-email').get(verifyEmailRoute).all(allowedMethods(['GET']))
+
+// generalRouter.route('/upload/avatar').post(authenticateMiddleware, checkPermissionsMiddleware([2]), uploadAvatarRoute).all(allowedMethods(['POST']))
+generalRouter.route('/upload/avatar').post(uploadAvatarRoute).all(allowedMethods(['POST']))
 
 // Some special routes
 generalRouter.route('/robots.txt').get(robotsTxtRoute).all(allowedMethods(['GET']))
