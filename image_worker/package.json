@@ -1,0 +1,11 @@
+{
+  "name": "image_worker",
+  "description": "",
+  "scripts": {
+    "start": "node --experimental-modules ./src/index.mjs"
+  },
+  "dependencies": {
+    "amqplib": "^0.5.5"
+  },
+  "devDependencies": {}
+}

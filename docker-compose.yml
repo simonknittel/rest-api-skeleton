@@ -4,6 +4,7 @@ services:
     build: ./api/
     depends_on:
       - database
+      - message_queue
     ports:
       - "8000:8000"
     env_file: .env
@@ -15,3 +16,15 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
+
+  message_queue:
+    image: rabbitmq:3.8.0-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  image_worker:
+    build: ./image_worker/
+    depends_on:
+      - message_queue
+    restart: always

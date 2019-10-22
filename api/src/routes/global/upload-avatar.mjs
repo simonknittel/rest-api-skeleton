@@ -58,19 +58,6 @@ export default function uploadAvatarRoute(req, res) {
 
 function uploadAvatar(filePath) {
   return new Promise((resolve, reject) => {
-    // BUG: Cloudinary returns "Invalid image file"
-    // const stream = cloudinary.uploader.upload_stream({
-    //   folder: 'rest-api-skeleton/avatars/'
-    // }, (error, result) => {
-    //   if (error) return reject({ type: 2, data: error })
-    //   resolve(result.secure_url)
-    // })
-
-    // fs.createReadStream(
-    //   filePath,
-    //   { encoding: 'binary' }
-    // ).pipe(stream)
-
     cloudinary.uploader.upload(
       filePath,
       { folder: config.uploads.avatars.cloudinaryFolder },

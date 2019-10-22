@@ -4,7 +4,7 @@ WORKDIR /app
 
 HEALTHCHECK --interval=1m --timeout=10s --start-period=5s --retries=3 CMD [ "curl", "-f", "http://localhost:8000" ]
 
-RUN apk --no-cache add --virtual builds-deps build-base python
+RUN apk add --no-cache --virtual builds-deps build-base python
 
 COPY package*.json ./
 RUN npm install --production

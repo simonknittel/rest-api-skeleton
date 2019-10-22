@@ -1,14 +1,9 @@
 {
-  "name": "rest-api-skeleton",
+  "name": "api",
   "description": "",
   "scripts": {
     "start": "node --experimental-modules ./src/index.mjs",
     "test": "jest"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm test"
-    }
   },
   "dependencies": {
     "bcrypt": "^3.0.6",
@@ -29,7 +24,6 @@
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "babel-jest": "^24.9.0",
-    "husky": "^3.0.9",
     "jest": "^24.9.0",
     "request": "^2.88.0"
   }
