@@ -5,7 +5,9 @@
     "start": "node --experimental-modules ./src/index.mjs"
   },
   "dependencies": {
-    "amqplib": "^0.5.5"
+    "@google-cloud/storage": "^4.0.0",
+    "amqplib": "^0.5.5",
+    "sharp": "^0.23.1"
   },
   "devDependencies": {}
 }

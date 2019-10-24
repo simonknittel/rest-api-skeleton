@@ -1,7 +1,5 @@
 import express from 'express'
 
-import config from '../../config.mjs'
-
 // Middleware
 import allowedMethods from '../../middleware/allowedMethods.mjs'
 import authenticateMiddleware from '../../middleware/authenticate.mjs'
@@ -13,7 +11,8 @@ import logoutRoute from './logout.mjs'
 import registerRoute from './register.mjs'
 import verifyEmailRoute from './verify-email.mjs'
 import robotsTxtRoute from './robots.txt.mjs'
-import uploadAvatarRoute from './upload-avatar.mjs'
+import uploadAvatarGCSRoute from './upload-avatar-gcs.mjs'
+import uploadAvatarCloudinaryRoute from './upload-avatar-cloudinary.mjs'
 
 const generalRouter = express.Router()
 
@@ -24,8 +23,8 @@ generalRouter.route('/logout').get(logoutRoute).all(allowedMethods(['GET']))
 generalRouter.route('/register').post(registerRoute).all(allowedMethods(['POST']))
 generalRouter.route('/verify-email').get(verifyEmailRoute).all(allowedMethods(['GET']))
 
-// generalRouter.route('/upload/avatar').post(authenticateMiddleware, checkPermissionsMiddleware([2]), uploadAvatarRoute).all(allowedMethods(['POST']))
-generalRouter.route('/upload/avatar').post(uploadAvatarRoute).all(allowedMethods(['POST']))
+generalRouter.route('/upload/avatar-gcs').post(uploadAvatarGCSRoute).all(allowedMethods(['POST']))
+generalRouter.route('/upload/avatar-cloudinary').post(uploadAvatarCloudinaryRoute).all(allowedMethods(['POST']))
 
 // Some special routes
 generalRouter.route('/robots.txt').get(robotsTxtRoute).all(allowedMethods(['GET']))

@@ -19,7 +19,7 @@ const upload = multer({
 // Other
 import config from '../../config.mjs'
 
-export default function uploadAvatarRoute(req, res) {
+export default function uploadAvatarCloudinaryRoute(req, res) {
   upload(req, res, err => {
     const mimeTypes = {
       'image/jpeg': 'jpg',

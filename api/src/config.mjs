@@ -14,6 +14,8 @@ if (!process.env.MAILGUN_FROM) missingConfig.push('MAILGUN_FROM')
 if (!process.env.PORT) missingConfig.push('PORT')
 if (!process.env.VERIFY_EMAIL_ROUTE) missingConfig.push('VERIFY_EMAIL_ROUTE')
 
+if (!process.env.GCLOUD_STORAGE_BUCKET) missingConfig.push('GCLOUD_STORAGE_BUCKET')
+
 if (missingConfig.length > 0) throw Error('Config missing: ' + missingConfig.join(', '))
 
 const config = {
@@ -39,6 +41,11 @@ const config = {
     avatars: {
       localTmp: 'uploads/avatars/',
       cloudinaryFolder: 'rest-api-skeleton/avatars/',
+    },
+  },
+  gc: {
+    s: {
+      bucket: process.env.GCLOUD_STORAGE_BUCKET,
     },
   },
 }

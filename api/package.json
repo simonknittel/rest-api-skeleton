@@ -6,6 +6,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@google-cloud/storage": "^4.0.0",
     "bcrypt": "^3.0.6",
     "cloudinary": "^1.16.0",
     "compression": "^1.7.4",

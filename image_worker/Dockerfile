@@ -2,7 +2,7 @@ FROM node:12.12.0-alpine
 
 WORKDIR /app
 
-RUN apk add --no-cache ffmpeg
+COPY gc-service-account.json ./
 
 COPY package*.json ./
 RUN npm install --production
