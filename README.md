@@ -16,6 +16,8 @@ _TODO: Add description_
 * Sessions are handled via a JWT stored in a cookie
 * For each session the user agent if transmitted is saved in the database
 * Fully dockerized
+* Users can reset their passwords
+* Image upload via Cloudinary
 
 
 ## During development

@@ -2,11 +2,11 @@
 import uuidv4 from 'uuid/v4.js'
 
 // Models
-import PasswordResetToken from '../../models/PasswordResetToken.mjs'
 import User from '../../models/User.mjs'
+import PasswordResetToken from '../../models/PasswordResetToken.mjs'
 
 export default function requestPasswordResetRoute(req, res) {
-  requestPasswordReset(req.query.login)
+  requestPasswordReset(req.body.login)
     .then(() => res.end())
     .catch((err) => {
       if (err.type === 1) {
@@ -34,13 +34,13 @@ export default function requestPasswordResetRoute(req, res) {
 
 function requestPasswordReset(login) {
   return new Promise((resolve, reject) => {
-    const token = uuidv4()
-
     // Search user to corresponding email address
     User
       .findOne({ where: { email: login } })
       .then(result => {
         if (result === null) return reject({ type: 1 })
+
+        const token = uuidv4()
 
         PasswordResetToken
           .create({ token, userId: user.id })

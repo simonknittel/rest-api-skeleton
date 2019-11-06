@@ -28,6 +28,7 @@ const config = {
   },
   jwt: {
     secret: process.env.JWT_SECRET,
+    expiration: 1000 * 60 * 60 * 24 * 365, // 365 days / 1 year
   },
   saltRounds: 11,
   resetPasswordTokenExpiration: 15 * 60 * 1000, // 15 minutes in miliseconds

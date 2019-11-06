@@ -16,7 +16,7 @@ export default function loginRoute(req, res) {
       res
         .cookie('jwt', token, {
           httpOnly: true,
-          maxAge: 1000 * 60 * 60 * 24 * 31 // 31 days / 1 month
+          maxAge: config.jwt.expiration,
         })
         .send()
     })
