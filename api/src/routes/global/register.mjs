@@ -1,11 +1,10 @@
 // Dependencies
 import uuidv4 from 'uuid/v4.js'
 import bcrypt from 'bcrypt'
-import https from 'https'
-import querystring from 'querystring'
 import config from '../../config.mjs'
 import User from '../../models/User.mjs'
 import VerifyEmailToken from '../../models/VerifyEmailToken.mjs'
+import Email from '../../shared/email.mjs'
 
 export default function registerRoute(req, res) {
   register(req.body.login, req.body.password)
@@ -20,15 +19,15 @@ export default function registerRoute(req, res) {
         res
           .status(500)
           .end()
-      } else if ([3, 4, 5].indexOf(err.type) > -1) { // Error in triggering the email verification
+      } else if ([3, 100, 101].indexOf(err.type) > -1) { // Error in triggering the email verification
         console.error(err.data)
         res
           .status(500)
           .end()
-      } else if (err.type === 6) { // Login already exists
+      } else if (err.type === 5) { // Login already exists
         res
           .status(400)
-          .json({ error: { id: 4, msg: 'Login already in use.' } })
+          .json({ error: { id: 4, msg: 'Login already in use.' } }) // TODO: This message is a security issue (information disclosure)
       }
     })
 }
@@ -59,7 +58,7 @@ function register(login, password) {
           })
           .catch(err => {
             if (err.name === 'SequelizeUniqueConstraintError') {
-              reject({ type: 6, data: err })
+              reject({ type: 5, data: err })
             } else {
               reject({ type: 2, data: err })
             }
@@ -75,37 +74,16 @@ function triggerVerifyEmail(user) {
     VerifyEmailToken
       .create({ token, userId: user.id })
       .then(() => {
-        const req = https.request({
-          hostname: 'api.eu.mailgun.net',
-          path: `/v3/${config.mailgun.domain}/messages`,
-          method: 'POST',
-          headers: {
-            'Authorization': 'Basic ' + Buffer.from(`api:${config.mailgun.key}`).toString('base64'),
-            'Content-Type': 'application/x-www-form-urlencoded',
-          }
-        }, (res) => {
-          let responseBody = ''
-          res.on('data', d => responseBody += d)
+        const email = new Email(
+          user.email,
+          'Verify your email address',
+          `<a href="${config.verifyEmailRoute}?token=${token}">Click here to verify your email address</a>`, // TODO: Change this to client when there has been added one
+        )
 
-          res.on('end', () => {
-            if (res.statusCode >= 400) return reject({ type: 5, data: responseBody})
-            resolve()
-          })
-        })
-
-        let failure = false
-        req.on('error', err => { failure = err })
-
-        req.write(querystring.stringify({
-          from: config.mailgun.from,
-          to: user.email,
-          subject: 'Verify your email address',
-          html: `<a href="${config.verifyEmailRoute}?token=${token}">Click here to verify your email address</a>`, // TODO: Change this to client when there has been added one
-        }))
-
-        req.end()
-
-        if (failure) reject({ type: 4, data: failure })
+        email
+          .send()
+          .then(resolve)
+          .catch(failure => reject(failure))
       })
       .catch(err => reject({ type: 3, data: err }))
   })
