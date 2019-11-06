@@ -20,6 +20,11 @@ export default function verifyEmailRoute(req, res) {
         res
           .status(500)
           .end()
+      } else if (err.type === 4) {
+        console.error(err.data)
+        res
+          .status(500)
+          .end()
       }
     })
 }
@@ -33,7 +38,13 @@ function verifyEmail(token) {
 
         User
           .update({ emailVerified: true }, { where: { id: result.user.id } })
-          .then(resolve) // TODO: Delete token fram database
+          .then(() => {
+            // Delete token
+            VerifyEmailToken
+              .destroy({ where: { token } })
+              .then(resolve)
+              .catch(err => reject({ type: 4, data: err }))
+          })
           .catch(err => reject({ type: 3, data: err }))
       })
       .catch(err => reject({ type: 2, data: err }))

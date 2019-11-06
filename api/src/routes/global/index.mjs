@@ -10,6 +10,8 @@ import loginRoute from './login.mjs'
 import logoutRoute from './logout.mjs'
 import registerRoute from './register.mjs'
 import verifyEmailRoute from './verify-email.mjs'
+import requestPasswordResetRoute from './request-password-reset.mjs'
+import setNewPasswordRoute from './set-new-password.mjs'
 import robotsTxtRoute from './robots.txt.mjs'
 import uploadAvatarGCSRoute from './upload-avatar-gcs.mjs'
 import uploadAvatarCloudinaryRoute from './upload-avatar-cloudinary.mjs'
@@ -22,6 +24,8 @@ generalRouter.route('/login').post(loginRoute).all(allowedMethods(['POST']))
 generalRouter.route('/logout').get(logoutRoute).all(allowedMethods(['GET']))
 generalRouter.route('/register').post(registerRoute).all(allowedMethods(['POST']))
 generalRouter.route('/verify-email').get(verifyEmailRoute).all(allowedMethods(['GET']))
+generalRouter.route('/request-password-reset').get(requestPasswordResetRoute).all(allowedMethods(['GET']))
+generalRouter.route('/set-new-password').get(setNewPasswordRoute).all(allowedMethods(['POST']))
 
 generalRouter.route('/upload/avatar-gcs').post(uploadAvatarGCSRoute).all(allowedMethods(['POST']))
 generalRouter.route('/upload/avatar-cloudinary').post(uploadAvatarCloudinaryRoute).all(allowedMethods(['POST']))

@@ -13,6 +13,7 @@ if (!process.env.MAILGUN_FROM) missingConfig.push('MAILGUN_FROM')
 
 if (!process.env.PORT) missingConfig.push('PORT')
 if (!process.env.VERIFY_EMAIL_ROUTE) missingConfig.push('VERIFY_EMAIL_ROUTE')
+if (!process.env.SET_NEW_PASSWORD_ROUTE) missingConfig.push('SET_NEW_PASSWORD_ROUTE')
 
 if (!process.env.GCLOUD_STORAGE_BUCKET) missingConfig.push('GCLOUD_STORAGE_BUCKET')
 
@@ -29,9 +30,11 @@ const config = {
     secret: process.env.JWT_SECRET,
   },
   saltRounds: 11,
+  resetPasswordTokenExpiration: 15 * 60 * 1000, // 15 minutes in miliseconds
   port: process.env.PORT,
   host: process.env.HOST,
   verifyEmailRoute: process.env.VERIFY_EMAIL_ROUTE,
+  setNewPasswordRoute: process.env.SET_NEW_PASSWORD_ROUTE,
   mailgun: {
     domain: process.env.MAILGUN_DOMAIN,
     key: process.env.MAILGUN_KEY,
