@@ -1,6 +1,8 @@
 import https from 'https'
 import querystring from 'querystring'
 
+import config from '../config.mjs'
+
 export default class Email {
   constructor(to, subject, html) {
     this.to = to

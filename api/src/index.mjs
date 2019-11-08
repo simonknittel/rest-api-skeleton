@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 
 // Router
 import globalRouter from './routes/global/index.mjs'
+import usersRouter from './routes/users/index.mjs'
 
 // Models
 import './models/index.mjs'
@@ -34,6 +35,7 @@ app.use(compression())
 
 // Global routes
 app.use('/', globalRouter)
+app.use('/users', usersRouter)
 
 // Start server
 sequelize.sync().then(() => {

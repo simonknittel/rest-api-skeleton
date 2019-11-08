@@ -21,6 +21,10 @@
         :search="search"
       ></v-data-table>
     </v-card>
+
+    <v-card>
+      <v-form></v-form>
+    </v-card>
   </div>
 </template>
 

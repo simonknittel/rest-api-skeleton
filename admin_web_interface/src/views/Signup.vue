@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto" max-width="344">
-    <v-card-title>Login</v-card-title>
+    <v-card-title>Signup</v-card-title>
 
     <v-form>
       <div class="px-4 pb-4">
@@ -16,7 +16,7 @@
     <v-divider></v-divider>
 
     <div class="pa-4 text-center">
-      <v-btn :to="{ name: 'signup' }" text>Create an account</v-btn>
+      <v-btn :to="{ name: 'login' }" text>Log in into an existing account</v-btn>
     </div>
   </v-card>
 </template>

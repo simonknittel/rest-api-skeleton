@@ -9,12 +9,12 @@ import checkPermissionsMiddleware from '../../middleware/checkPermissions.mjs'
 import loginRoute from './login.mjs'
 import logoutRoute from './logout.mjs'
 import registerRoute from './register.mjs'
-import verifyEmailRoute from './verify-email.mjs'
-import requestPasswordResetRoute from './request-password-reset.mjs'
-import setNewPasswordRoute from './set-new-password.mjs'
+import verifyEmailRoute from './verifyEmail.mjs'
+import requestPasswordResetRoute from './requestPasswordReset.mjs'
+import setNewPasswordRoute from './setNewPassword.mjs'
 import robotsTxtRoute from './robots.txt.mjs'
-import uploadAvatarGCSRoute from './upload-avatar-gcs.mjs'
-import uploadAvatarCloudinaryRoute from './upload-avatar-cloudinary.mjs'
+import uploadAvatarGCSRoute from './uploadAvatarGCS.mjs'
+import uploadAvatarCloudinaryRoute from './uploadAvatarCloudinary.mjs'
 
 const generalRouter = express.Router()
 

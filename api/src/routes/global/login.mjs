@@ -20,7 +20,7 @@ export default function loginRoute(req, res) {
         })
         .send()
     })
-    .catch((err) => {
+    .catch(err => {
       if (err.type === 1) {
         res
           .status(400)
