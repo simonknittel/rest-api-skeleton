@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Frame from '../views/Frame.vue'
 
 Vue.use(VueRouter)
 
@@ -8,7 +8,13 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home,
+    component: Frame,
+    children: [
+      {
+        path: '',
+        component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
+      }
+    ]
   },
   {
     path: '/signup',
@@ -23,22 +29,46 @@ const routes = [
   {
     path: '/password-reset',
     name: 'password-reset',
-    component: () => import(/* webpackChunkName: "password-reset" */ '../views/PasswordReset.vue'),
+    component: Frame,
+    children: [
+      {
+        path: '',
+        component: () => import(/* webpackChunkName: "password-reset" */ '../views/PasswordReset.vue'),
+      }
+    ]
   },
   {
     path: '/set-new-password',
     name: 'set-new-password',
-    component: () => import(/* webpackChunkName: "set-new-password" */ '../views/SetNewPassword.vue'),
+    component: Frame,
+    children: [
+      {
+        path: '',
+        component: () => import(/* webpackChunkName: "set-new-password" */ '../views/SetNewPassword.vue'),
+      }
+    ]
   },
   {
     path: '/users',
     name: 'users',
-    component: () => import(/* webpackChunkName: "users" */ '../views/Users.vue'),
+    component: Frame,
+    children: [
+      {
+        path: '',
+        component: () => import(/* webpackChunkName: "users" */ '../views/Users.vue'),
+      }
+    ]
   },
   {
     path: '/sessions',
     name: 'sessions',
-    component: () => import(/* webpackChunkName: "sessions" */ '../views/Sessions.vue'),
+    component: Frame,
+    children: [
+      {
+        path: '',
+        component: () => import(/* webpackChunkName: "sessions" */ '../views/Sessions.vue'),
+      }
+    ]
   },
 ]
 
