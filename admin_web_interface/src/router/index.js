@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Frame from '../views/Frame.vue'
+
+import store from '../store'
+
+import PrivateFrame from '../views/PrivateFrame.vue'
+import PublicFrame from '../views/PublicFrame.vue'
 
 Vue.use(VueRouter)
 
@@ -8,7 +12,11 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Frame,
+    component: PrivateFrame,
+    beforeEnter: (to, from, next) => {
+      if (!store.state.me) next('/login')
+      else next()
+    },
     children: [
       {
         path: '',
@@ -19,17 +27,41 @@ const routes = [
   {
     path: '/signup',
     name: 'signup',
-    component: () => import(/* webpackChunkName: "signup" */ '../views/Signup.vue'),
+    component: PublicFrame,
+    beforeEnter: (to, from, next) => {
+      if (store.state.me) next('/')
+      else next()
+    },
+    children: [
+      {
+        path: '',
+        component: () => import(/* webpackChunkName: "signup" */ '../views/Signup.vue'),
+      }
+    ],
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
+    component: PublicFrame,
+    beforeEnter: (to, from, next) => {
+      if (store.state.me) next('/')
+      else next()
+    },
+    children: [
+      {
+        path: '',
+        component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
+      }
+    ],
   },
   {
     path: '/password-reset',
     name: 'password-reset',
-    component: Frame,
+    component: PublicFrame,
+    beforeEnter: (to, from, next) => {
+      if (store.state.me) next('/')
+      else next()
+    },
     children: [
       {
         path: '',
@@ -40,7 +72,11 @@ const routes = [
   {
     path: '/set-new-password',
     name: 'set-new-password',
-    component: Frame,
+    component: PublicFrame,
+    beforeEnter: (to, from, next) => {
+      if (store.state.me) next('/')
+      else next()
+    },
     children: [
       {
         path: '',
@@ -51,7 +87,11 @@ const routes = [
   {
     path: '/users',
     name: 'users',
-    component: Frame,
+    component: PrivateFrame,
+    beforeEnter: (to, from, next) => {
+      if (!store.state.me) next('/login')
+      else next()
+    },
     children: [
       {
         path: '',
@@ -62,7 +102,11 @@ const routes = [
   {
     path: '/sessions',
     name: 'sessions',
-    component: Frame,
+    component: PrivateFrame,
+    beforeEnter: (to, from, next) => {
+      if (!store.state.me) next('/login')
+      else next()
+    },
     children: [
       {
         path: '',
