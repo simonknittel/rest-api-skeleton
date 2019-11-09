@@ -4,27 +4,25 @@
       <v-card>
         <v-card-title>Login</v-card-title>
 
-        <v-form @submit.prevent="submit">
-          <div class="px-4 pb-4">
-            <v-text-field
-              v-model="email"
-              label="Email address"
-              type="email"
-              prepend-icon="mdi-email"
-              :rules="[rules.required, rules.email]"
-            ></v-text-field>
+        <v-form @submit.prevent="submit" class="px-4 pb-4">
+          <v-text-field
+            v-model="email"
+            label="Email address"
+            type="email"
+            prepend-icon="mdi-email"
+            :rules="[rules.required, rules.email]"
+          ></v-text-field>
 
-            <v-text-field
-              v-model="password"
-              label="Password"
-              type="password"
-              prepend-icon="mdi-lock"
-              :rules="[rules.required]"
-            ></v-text-field>
+          <v-text-field
+            v-model="password"
+            label="Password"
+            type="password"
+            prepend-icon="mdi-lock"
+            :rules="[rules.required]"
+          ></v-text-field>
 
-            <div class="d-flex justify-end">
-              <v-btn type="submit" :loading="loading" color="deep-purple accent-4" dark>Submit</v-btn>
-            </div>
+          <div class="d-flex justify-end">
+            <v-btn type="submit" :loading="loading" color="deep-purple accent-4" dark>Submit</v-btn>
           </div>
         </v-form>
 

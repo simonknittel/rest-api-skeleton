@@ -4,14 +4,12 @@
       <v-card>
         <v-card-title>Signup</v-card-title>
 
-        <v-form>
-          <div class="px-4 pb-4">
-            <v-text-field label="Email address" type="email" prepend-icon="mdi-email"></v-text-field>
-            <v-text-field label="Password" type="password" prepend-icon="mdi-lock"></v-text-field>
+        <v-form class="px-4 pb-4">
+          <v-text-field label="Email address" type="email" prepend-icon="mdi-email"></v-text-field>
+          <v-text-field label="Password" type="password" prepend-icon="mdi-lock"></v-text-field>
 
-            <div class="d-flex justify-end">
-              <v-btn type="submit" color="deep-purple accent-4" dark>Submit</v-btn>
-            </div>
+          <div class="d-flex justify-end">
+            <v-btn type="submit" color="deep-purple accent-4" dark>Submit</v-btn>
           </div>
         </v-form>
 

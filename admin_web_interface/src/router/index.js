@@ -9,7 +9,8 @@ import PublicFrame from '../views/PublicFrame.vue'
 Vue.use(VueRouter)
 
 function checkAuthentication(to, from, next, publicFacing = false) {
-  console.log(to, from) // BUG: from is empty on redirect
+  // BUG: from is empty on redirect
+  // console.log(to, from)
   if (from.name) return next()
 
   fetch('http://localhost:8000/authenticated', {
