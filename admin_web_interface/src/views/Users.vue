@@ -21,7 +21,11 @@
         :search="search"
         sort-by="id"
         :loading="tableLoading"
-      ></v-data-table>
+      >
+        <template v-slot:item.action="{ item }">
+          <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+        </template>
+      </v-data-table>
     </v-card>
 
     <v-card class="mt-4">
@@ -51,7 +55,11 @@ export default {
       if (this.users.length === 0) return []
 
       const keys = Object.keys(this.users[0])
-      return keys.map(value => { return { text: value, value } })
+      const headers = keys.map(value => { return { text: value, value } })
+
+      headers.push({ text: 'Actions', value: 'action', sortable: false })
+
+      return headers
     },
     usersStringified() {
       return this.users.map(user => {
@@ -61,6 +69,26 @@ export default {
           emailVerified: user.emailVerified.toString(),
         }
       })
+    },
+  },
+  methods: {
+    deleteItem(item) {
+      fetch('http://localhost:8000/users/' + item.id, {
+        method: 'DELETE',
+        credentials: 'include',
+      })
+        .then(res => {
+          if (res.status !== 200) {
+            // TODO: Show error message
+            console.error(res)
+            return;
+          }
+
+          this.users = this.users.filter(user => user.id !== item.id)
+        })
+        .catch(err => {
+          console.error(err)
+        })
     },
   },
   created() {

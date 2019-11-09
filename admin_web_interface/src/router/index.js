@@ -21,6 +21,8 @@ function checkAuthentication(to, from, next, publicFacing = false) {
         res
           .json()
           .then(json => {
+            // TODO: Check if user has required permissions
+
             store.commit('storeAuthentication', json)
 
             if (publicFacing) next({ name: 'home' }) // TODO: Redirect based on redirect parameter from the URL

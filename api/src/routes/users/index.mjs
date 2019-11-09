@@ -22,7 +22,7 @@ usersRouter.route('/')
 usersRouter.route('/:id')
   .get(getRoute)
   .put(authenticateMiddleware, putRoute)
-  .delete(authenticateMiddleware, deleteRoute)
+  .delete(authenticateMiddleware, checkPermissionsMiddleware([1]), deleteRoute)
   .all(allowedMethods(['GET', 'PUT', 'DELETE']))
 
 export default usersRouter
