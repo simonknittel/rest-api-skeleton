@@ -10,7 +10,7 @@
             <v-text-field label="Password" type="password" prepend-icon="mdi-lock"></v-text-field>
 
             <div class="d-flex justify-end">
-              <v-btn color="deep-purple accent-4" dark>Submit</v-btn>
+              <v-btn type="submit" color="deep-purple accent-4" dark>Submit</v-btn>
             </div>
           </div>
         </v-form>

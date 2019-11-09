@@ -2,7 +2,7 @@
   <v-app-bar app dense flat color="transparent">
     <v-spacer></v-spacer>
 
-    <span class="mr-4">Logged in as <span class="font-weight-bold">foo@bar</span></span>
+    <span class="mr-4">Logged in as <span class="font-weight-bold">{{ email }}</span></span>
 
     <v-btn @click="logout" :loading="loading" text color="deep-purple accent-4">
       <v-icon left>mdi-logout</v-icon> Log out
@@ -18,6 +18,11 @@ export default {
     return {
       loading: false,
     }
+  },
+  computed: {
+    email() {
+      return this.$store.state.authentication.email
+    },
   },
   methods: {
     logout() {

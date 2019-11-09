@@ -86,7 +86,7 @@ function login(login, password, userAgent = null) {
               if (!user.emailVerified) return reject({ type: 4 })
 
               // Create token (expires in 31 days / 1 month)
-              const token = jwt.sign({ userId: user.id, rank: user.rank }, config.jwt.secret, { expiresIn: '31d' })
+              const token = jwt.sign({ userId: user.id, rank: user.rank, email: user.email }, config.jwt.secret, { expiresIn: '31d' })
 
               Session
                 .create({ token, userAgent })

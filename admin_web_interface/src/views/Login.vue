@@ -4,13 +4,26 @@
       <v-card>
         <v-card-title>Login</v-card-title>
 
-        <v-form @submit="submit">
+        <v-form @submit.prevent="submit">
           <div class="px-4 pb-4">
-            <v-text-field v-model="email" label="Email address" type="email" prepend-icon="mdi-email"></v-text-field>
-            <v-text-field v-model="password" label="Password" type="password" prepend-icon="mdi-lock"></v-text-field>
+            <v-text-field
+              v-model="email"
+              label="Email address"
+              type="email"
+              prepend-icon="mdi-email"
+              :rules="[rules.required, rules.email]"
+            ></v-text-field>
+
+            <v-text-field
+              v-model="password"
+              label="Password"
+              type="password"
+              prepend-icon="mdi-lock"
+              :rules="[rules.required]"
+            ></v-text-field>
 
             <div class="d-flex justify-end">
-              <v-btn @click="submit" :loading="loading" color="deep-purple accent-4" dark>Submit</v-btn>
+              <v-btn type="submit" :loading="loading" color="deep-purple accent-4" dark>Submit</v-btn>
             </div>
           </div>
         </v-form>
@@ -34,11 +47,20 @@ export default {
       email: '',
       password: '',
       loading: false,
+      rules: {
+        required: value => !!value || 'Required.',
+        email: value => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || 'Invalid.'
+        },
+      },
     }
   },
   methods: {
     submit: function() {
       this.loading = true
+
+      // TODO: Trigger validation
 
       const body = new URLSearchParams()
       body.append('login', this.email.trim())
