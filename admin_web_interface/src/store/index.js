@@ -5,9 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    me: null,
+    authentication: null,
   },
   mutations: {
+    storeAuthentication (state, payload) {
+      state.authentication = payload
+    },
+    clearAuthentication (state) {
+      state.authentication = null
+    }
   },
   actions: {
   },

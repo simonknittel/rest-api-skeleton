@@ -10,11 +10,16 @@ export default function authenticateMiddleware(req, res, next) {
     return
   }
 
+  /**
+   * BUG: cookie-parser tries to automatically convert the value of the cookie
+   * into e.g. an real JavaScript object which leads to issues during searching
+   * for the cookie in the database
+   */
   const token = req.cookies.jwt
 
   authenticate(token)
-    .then(userId => {
-      res.locals.userId = userId
+    .then(authentication => {
+      res.locals.authentication = authentication
       next()
     })
     .catch(err => {
@@ -31,16 +36,22 @@ export default function authenticateMiddleware(req, res, next) {
     })
 }
 
+/**
+ * Verifies a provided JWT and checks it against the database. Returns the decoded JWT.
+ *
+ * @param {String} token
+ * @returns {Object} Decoded JWT
+ */
 function authenticate(token) {
   return new Promise((resolve, reject) => {
     Session
-      .findOne({ where: { jwt: token } })
+      .findOne({ where: { token } })
       .then(result => {
         if (result === null) return reject({ type: 1 })
 
         jwt.verify(token, config.jwt.secret, (err, decoded) => {
           if (err) return reject({ type: 1 })
-          resolve(decoded.userId)
+          resolve(decoded)
         })
       })
       .catch(err => reject({ type: 2, data: err }))

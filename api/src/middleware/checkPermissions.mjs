@@ -2,11 +2,11 @@ import User from '../models/User.mjs'
 
 export default function checkPermissionsMiddleware(allowedRanks) {
   return (req, res, next) => {
-    checkPermissions(res.locals.userId, allowedRanks)
+    checkPermissions(res.locals.authentication.userId, allowedRanks)
       .then(next)
       .catch(() => {
         return res
-          .status(401)
+          .status(403)
           .end()
       })
   }

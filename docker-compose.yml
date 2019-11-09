@@ -17,10 +17,10 @@ services:
     ports:
       - "5432:5432"
 
-  admin_web_interface:
-    build: ./admin_web_interface/
-    ports:
-      - "8080:80"
+  # admin_web_interface:
+  #   build: ./admin_web_interface/
+  #   ports:
+  #     - "8080:80"
 
   # message_queue:
   #   image: rabbitmq:3.8.0-management-alpine

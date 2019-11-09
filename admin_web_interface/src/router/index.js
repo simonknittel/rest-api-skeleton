@@ -8,108 +8,129 @@ import PublicFrame from '../views/PublicFrame.vue'
 
 Vue.use(VueRouter)
 
+function checkAuthentication(to, from, next, publicFacing = false) {
+  console.log(to, from) // BUG: from is empty on redirect
+  if (from.name) return next()
+
+  fetch('http://localhost:8000/authenticated', {
+    credentials: 'include',
+  })
+    .then(res => {
+      if (res.status === 200) {
+        res
+          .json()
+          .then(json => {
+            store.commit('storeAuthentication', json)
+
+            if (publicFacing) next({ name: 'home' }) // TODO: Redirect based on redirect parameter from the URL
+            else next()
+          })
+      } else {
+        if (publicFacing) next()
+        else next({ name: 'login' }) // TODO: Append redirect parameter to the URL
+      }
+    })
+    .catch(() => {
+      if (publicFacing) next()
+      else next({ name: 'login' }) // TODO: Append redirect parameter to the URL
+    })
+}
+
 const routes = [
   {
     path: '/',
-    name: 'home',
     component: PrivateFrame,
     beforeEnter: (to, from, next) => {
-      if (!store.state.me) next('/login')
-      else next()
+      checkAuthentication(to, from, next)
     },
     children: [
       {
         path: '',
+        name: 'home',
         component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
       }
     ]
   },
   {
     path: '/signup',
-    name: 'signup',
     component: PublicFrame,
     beforeEnter: (to, from, next) => {
-      if (store.state.me) next('/')
-      else next()
+      checkAuthentication(to, from, next, true)
     },
     children: [
       {
         path: '',
+        name: 'signup',
         component: () => import(/* webpackChunkName: "signup" */ '../views/Signup.vue'),
       }
     ],
   },
   {
     path: '/login',
-    name: 'login',
     component: PublicFrame,
     beforeEnter: (to, from, next) => {
-      if (store.state.me) next('/')
-      else next()
+      checkAuthentication(to, from, next, true)
     },
     children: [
       {
         path: '',
+        name: 'login',
         component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
       }
     ],
   },
   {
     path: '/password-reset',
-    name: 'password-reset',
     component: PublicFrame,
     beforeEnter: (to, from, next) => {
-      if (store.state.me) next('/')
-      else next()
+      checkAuthentication(to, from, next, true)
     },
     children: [
       {
         path: '',
+        name: 'password-reset',
         component: () => import(/* webpackChunkName: "password-reset" */ '../views/PasswordReset.vue'),
       }
     ]
   },
   {
     path: '/set-new-password',
-    name: 'set-new-password',
     component: PublicFrame,
     beforeEnter: (to, from, next) => {
-      if (store.state.me) next('/')
-      else next()
+      checkAuthentication(to, from, next, true)
     },
     children: [
       {
         path: '',
+        name: 'set-new-password',
         component: () => import(/* webpackChunkName: "set-new-password" */ '../views/SetNewPassword.vue'),
       }
     ]
   },
   {
     path: '/users',
-    name: 'users',
     component: PrivateFrame,
     beforeEnter: (to, from, next) => {
-      if (!store.state.me) next('/login')
-      else next()
+      checkAuthentication(to, from, next)
     },
     children: [
       {
         path: '',
+        name: 'users',
         component: () => import(/* webpackChunkName: "users" */ '../views/Users.vue'),
       }
     ]
   },
   {
     path: '/sessions',
-    name: 'sessions',
     component: PrivateFrame,
     beforeEnter: (to, from, next) => {
-      if (!store.state.me) next('/login')
-      else next()
+      checkAuthentication(to, from, next)
     },
     children: [
       {
         path: '',
+        name: 'sessions',
         component: () => import(/* webpackChunkName: "sessions" */ '../views/Sessions.vue'),
       }
     ]

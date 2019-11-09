@@ -2,16 +2,19 @@ import jwt from 'jsonwebtoken'
 import config from '../../config.mjs'
 import Session from '../../models/Session.mjs'
 
-export default function login(req, res) {
-  const authHeader = req.header('Authorization')
+export default function logoutRoute(req, res) {
+  /**
+   * BUG: cookie-parser tries to automatically convert the value of the cookie
+   * into e.g. an real JavaScript object which leads to issues during searching
+   * for the cookie in the database
+   */
+  const token = req.cookies.jwt
 
   // No token found -> Nothing to log out
-  if (!authHeader || authHeader.indexOf('Bearer') !== 0) {
+  if (!token) {
     res.end()
     return
   }
-
-  const token = authHeader.slice(7)
 
   jwt.verify(token, config.jwt.secret, (err) => {
     // Provided token invalid -> Nothing to log out
@@ -22,9 +25,13 @@ export default function login(req, res) {
 
     Session
       .destroy({ where: { token } })
-      .then(() => res.end())
+      .then(() => {
+        res
+          .clearCookie('jwt')
+          .end()
+      })
       .catch(err => {
-        console.error(err.name)
+        console.error(err)
         res
           .status(500)
           .end()

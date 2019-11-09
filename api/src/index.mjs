@@ -2,6 +2,7 @@ import express from 'express'
 import helmet from 'helmet'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
+import cors from 'cors'
 
 // Router
 import globalRouter from './routes/global/index.mjs'
@@ -29,6 +30,11 @@ app.use(helmet({
     policy: 'same-origin'
   },
   noCache: {}
+}))
+
+app.use(cors({
+  origin: 'http://localhost:8080', // TODO: Make configurable
+  credentials: true,
 }))
 
 app.use(compression())

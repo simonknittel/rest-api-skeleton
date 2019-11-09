@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       items: [
         { title: 'Dashboard', icon: 'mdi-home', route: '/' },

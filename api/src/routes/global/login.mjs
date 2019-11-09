@@ -13,12 +13,15 @@ export default function loginRoute(req, res) {
 
   login(req.body.login, req.body.password, userAgent)
     .then(token => {
-      res
-        .cookie('jwt', token, {
-          httpOnly: true,
-          maxAge: config.jwt.expiration,
-        })
-        .send()
+      // Respond with signed token in cookie and decoded cookie in body
+      jwt.verify(token, config.jwt.secret, (err, decoded) => {
+        res
+          .cookie('jwt', token, {
+            httpOnly: true,
+            maxAge: config.jwt.expiration,
+          })
+          .send(decoded)
+      })
     })
     .catch(err => {
       if (err.type === 1) {
@@ -42,6 +45,14 @@ export default function loginRoute(req, res) {
     })
 }
 
+/**
+ * Verifies login and password. Returns a signed JWT containing the user's id and rank.
+ *
+ * @param {String} login
+ * @param {String} password
+ * @param {String} [userAgent=null]
+ * @returns {String} Signed JWT
+ */
 function login(login, password, userAgent = null) {
   return new Promise((resolve, reject) => {
     if (
@@ -75,7 +86,7 @@ function login(login, password, userAgent = null) {
               if (!user.emailVerified) return reject({ type: 4 })
 
               // Create token (expires in 31 days / 1 month)
-              const token = jwt.sign({ userId: user.id }, config.jwt.secret, { expiresIn: '31d' })
+              const token = jwt.sign({ userId: user.id, rank: user.rank }, config.jwt.secret, { expiresIn: '31d' })
 
               Session
                 .create({ token, userAgent })

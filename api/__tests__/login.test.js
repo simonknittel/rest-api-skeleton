@@ -21,7 +21,7 @@ describe('login', () => {
       const token = body;
 
       request({
-        url: `${BASE_URL}/user-secured`,
+        url: `${BASE_URL}/authenticated`,
         headers: { Authorization: 'Bearer ' + token }
       }, (err, res) => {
         expect(err).toBeNull() // Check if there has been some connection error
@@ -61,7 +61,7 @@ describe('login', () => {
       const token = body;
 
       request({
-        url: `${BASE_URL}/user-secured`,
+        url: `${BASE_URL}/authenticated`,
         headers: { Authorization: 'Bearer ' + token }
       }, (err, res) => {
         expect(err).toBeNull() // Check if there has been some connection error
