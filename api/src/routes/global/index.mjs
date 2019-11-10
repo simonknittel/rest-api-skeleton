@@ -21,7 +21,7 @@ const router = express.Router()
 
 router.route('/').get((req, res) => res.end())
 
-router.route('/authenticated').get(authenticateMiddleware, isAllowedMiddleware([2]), authenticatedRoute).all(allowedMethods(['GET']))
+router.route('/authenticated').get(authenticateMiddleware, isAllowedMiddleware('route:global:authenticated'), authenticatedRoute).all(allowedMethods(['GET']))
 router.route('/login').post(loginRoute).all(allowedMethods(['POST']))
 router.route('/logout').get(logoutRoute).all(allowedMethods(['GET']))
 router.route('/signup').post(signupRoute).all(allowedMethods(['POST']))
@@ -36,6 +36,6 @@ router.route('/upload/avatar-cloudinary').post(uploadAvatarCloudinaryRoute).all(
 router.route('/robots.txt').get(robotsTxtRoute).all(allowedMethods(['GET']))
 
 // Some routes for testing (TODO: Get rid of in production)
-router.route('/admin-secured').get(authenticateMiddleware, isAllowedMiddleware([1]), (req, res) => { res.send('Admin secured.') }).all(allowedMethods(['GET']))
+router.route('/admin-secured').get(authenticateMiddleware, isAllowedMiddleware('route:global:adminSecured'), (req, res) => { res.send('Admin secured.') }).all(allowedMethods(['GET']))
 
 export default router

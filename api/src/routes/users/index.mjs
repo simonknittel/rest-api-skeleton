@@ -16,13 +16,13 @@ const router = express.Router()
 
 router.route('/')
   .get(getAllRoute)
-  .post(authenticateMiddleware, isAllowedMiddleware([1]), postRoute)
+  .post(authenticateMiddleware, isAllowedMiddleware('route:users:post'), postRoute)
   .all(allowedMethods(['GET', 'POST']))
 
 router.route('/:id')
   .get(getRoute)
   .put(authenticateMiddleware, putRoute)
-  .delete(authenticateMiddleware, isAllowedMiddleware([1]), deleteRoute)
+  .delete(authenticateMiddleware, isAllowedMiddleware('route:users:delete'), deleteRoute)
   .all(allowedMethods(['GET', 'PUT', 'DELETE']))
 
 export default router

@@ -34,8 +34,12 @@ export default function loginRoute(req, res) {
           .end()
       } else if (err.type === 4) {
         res
-          .status(401)
+          .status(403)
           .json({ error: {id: 4, msg: 'E-mail address is not yet verified.'} })
+      } else if (err.type === 5) {
+        res
+          .status(403)
+          .json({ error: {id: 5, msg: 'Permission required.'} })
       }
     })
 }

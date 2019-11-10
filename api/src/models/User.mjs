@@ -13,10 +13,18 @@ User.init({
     type: Sequelize.STRING,
     allowNull: false,
   },
-  rank: {
+  permissionRole: {
     type: Sequelize.INTEGER,
     allowNull: false,
     defaultValue: 0,
+  },
+  whitelistedPermissions: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+  blacklistedPermissions: {
+    type: Sequelize.STRING,
+    allowNull: true,
   },
   emailVerified: {
     type: Sequelize.BOOLEAN,
@@ -29,10 +37,3 @@ User.init({
 })
 
 export default User
-
-/**
- * Ranks
- * 0: default (no permissions)
- * 1: admin (all permissions)
- * 2: user (standard permissions)
- */

@@ -34,7 +34,9 @@ function filter(items) {
       createdAt: item.createdAt,
       updatedAt: item.updatedAt,
       email: item.email,
-      rank: item.rank,
+      permissionRole: item.permissionRole,
+      whitelistedPermissions: item.whitelistedPermissions,
+      blacklistedPermissions: item.blacklistedPermissions,
       emailVerified: item.emailVerified,
     }
   })

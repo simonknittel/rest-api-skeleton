@@ -18,6 +18,10 @@ export default function requestPasswordResetRoute(req, res) {
         res
           .status(500)
           .end()
+      } else if (err.type === 4) {
+        res
+          .status(403)
+          .json({ error: {id: 5, msg: 'Permission required.'} })
       } else if ([100, 101].indexOf(err.type) > -1) { // Error in triggering the email
         console.error(err.data)
         res

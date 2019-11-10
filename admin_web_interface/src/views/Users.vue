@@ -20,6 +20,7 @@
         :items="usersStringified"
         :search="search"
         sort-by="id"
+        sort-desc="true"
         :loading="tableLoading"
       >
         <template v-slot:item.action="{ item }">

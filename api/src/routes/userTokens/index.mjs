@@ -13,12 +13,12 @@ import deleteRoute from './delete.mjs'
 const router = express.Router()
 
 router.route('/')
-  .get(authenticateMiddleware, isAllowedMiddleware([1]), getAllRoute)
+  .get(authenticateMiddleware, isAllowedMiddleware('route:userToken:getAll'), getAllRoute)
   .all(allowedMethods(['GET']))
 
 router.route('/:id')
-  .get(authenticateMiddleware, isAllowedMiddleware([1]), getRoute)
-  .delete(authenticateMiddleware, isAllowedMiddleware([1]), deleteRoute)
+  .get(authenticateMiddleware, isAllowedMiddleware('route:userToken:get'), getRoute)
+  .delete(authenticateMiddleware, isAllowedMiddleware('route:userToken:delete'), deleteRoute)
   .all(allowedMethods(['GET', 'DELETE']))
 
 export default router

@@ -6,6 +6,8 @@ import config from '../config.mjs'
 import User from '../models/User.mjs'
 import Session from '../models/Session.mjs'
 
+import isAllowed from './isAllowed.mjs'
+
 /**
  * Verifies login and password. Returns a signed JWT containing the user's id and rank.
  *
@@ -23,16 +25,6 @@ export default function login(login, password, userAgent = null) {
         || password.length <= 0
       ) return reject({ type: 1 })
 
-      // Bypass login with admin credentials
-      if (
-        process.env.NODE_ENV === 'development'
-        && login.trim() === process.env.ADMIN_LOGIN
-        && password === process.env.ADMIN_PASS
-      ) {
-        const token = jwt.sign({ userId: 0 }, config.jwt.secret)
-        return resolve(token)
-      }
-
       // Search for real user
       User
         .findOne({ where: { email: login.trim() } })
@@ -44,15 +36,19 @@ export default function login(login, password, userAgent = null) {
             .then(result => {
               if (result === false) return reject({ type: 2 })
 
-              if (!user.emailVerified) return reject({ type: 4 })
+              isAllowed(user.id, 'login')
+                .then(() => {
+                  if (!user.emailVerified) return reject({ type: 4 })
 
-              // Create token (expires in 31 days / 1 month)
-              const token = jwt.sign({ userId: user.id, rank: user.rank, email: user.email }, config.jwt.secret, { expiresIn: '31d' })
+                  // Create token (expires in 31 days / 1 month)
+                  const token = jwt.sign({ userId: user.id, permissionRole: user.permissionRole, email: user.email }, config.jwt.secret, { expiresIn: '31d' })
 
-              Session
-                .create({ token, userAgent })
-                .then(() => resolve(token))
-                .catch(err => reject({ type: 3, data: err }))
+                  Session
+                    .create({ token, userAgent })
+                    .then(() => resolve(token))
+                    .catch(err => reject({ type: 3, data: err }))
+                })
+                .catch(() => reject({ type: 5 }))
             })
         })
         .catch(err => reject({ type: 3, data: err }))
