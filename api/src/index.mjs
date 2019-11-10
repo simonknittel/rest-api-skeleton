@@ -7,6 +7,8 @@ import cors from 'cors'
 // Router
 import globalRouter from './routes/global/index.mjs'
 import usersRouter from './routes/users/index.mjs'
+import sessionsRouter from './routes/sessions/index.mjs'
+import userTokensRouter from './routes/userTokens/index.mjs'
 
 // Models
 import './models/index.mjs'
@@ -42,6 +44,8 @@ app.use(compression())
 // Global routes
 app.use('/', globalRouter)
 app.use('/users', usersRouter)
+app.use('/sessions', sessionsRouter)
+app.use('/user-tokens', userTokensRouter)
 
 // Start server
 sequelize.sync().then(() => {

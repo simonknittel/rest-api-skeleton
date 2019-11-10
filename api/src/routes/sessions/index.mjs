@@ -8,21 +8,17 @@ import isAllowedMiddleware from '../../middleware/isAllowed.mjs'
 // Routes
 import getRoute from './get.mjs'
 import getAllRoute from './getAll.mjs'
-import postRoute from './post.mjs'
-import putRoute from './put.mjs'
 import deleteRoute from './delete.mjs'
 
 const router = express.Router()
 
 router.route('/')
-  .get(getAllRoute)
-  .post(authenticateMiddleware, isAllowedMiddleware([1]), postRoute)
-  .all(allowedMethods(['GET', 'POST']))
+  .get(authenticateMiddleware, isAllowedMiddleware([1]), getAllRoute)
+  .all(allowedMethods(['GET']))
 
 router.route('/:id')
-  .get(getRoute)
-  .put(authenticateMiddleware, putRoute)
+  .get(authenticateMiddleware, isAllowedMiddleware([1]), getRoute)
   .delete(authenticateMiddleware, isAllowedMiddleware([1]), deleteRoute)
-  .all(allowedMethods(['GET', 'PUT', 'DELETE']))
+  .all(allowedMethods(['GET', 'DELETE']))
 
 export default router

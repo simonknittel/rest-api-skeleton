@@ -34,6 +34,8 @@ export default {
       items: [
         { title: 'Dashboard', icon: 'mdi-home', route: '/' },
         { title: 'Users', icon: 'mdi-account-group', route: '/users' },
+        { title: 'Sessions', icon: 'mdi-account-group', route: '/sessions' },
+        { title: 'UserTokens', icon: 'mdi-account-group', route: '/user-tokens' },
       ],
       right: null,
     }

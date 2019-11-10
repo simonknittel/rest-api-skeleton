@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="mb-4">Sessions</h1>
+    <h1 class="mb-4">UserTokens</h1>
 
     <v-card>
       <v-card-title>
@@ -17,7 +17,7 @@
 
       <v-data-table
         :headers="headers"
-        :items="sessionsStringified"
+        :items="userTokensStringified"
         :search="search"
         sort-by="id"
         :loading="tableLoading"
@@ -35,34 +35,34 @@ export default {
   data() {
     return {
       search: '',
-      sessions: [],
+      userTokens: [],
       tableLoading: true,
-      newSessionLoading: false,
+      newUserTokenLoading: false,
     }
   },
   computed: {
     headers() {
-      if (this.sessions.length === 0) return []
+      if (this.userTokens.length === 0) return []
 
-      const keys = Object.keys(this.sessions[0])
+      const keys = Object.keys(this.userTokens[0])
       const headers = keys.map(value => { return { text: value, value } })
 
       headers.push({ text: 'Actions', value: 'action', sortable: false })
 
       return headers
     },
-    sessionsStringified() {
-      return this.sessions.map(session => {
+    userTokensStringified() {
+      return this.userTokens.map(userToken => {
         // TODO: Add toggle to show dates in human readable format
         return {
-          ...session,
+          ...userToken,
         }
       })
     },
   },
   methods: {
     deleteItem(item) {
-      fetch('http://localhost:8000/sessions/' + item.id, {
+      fetch('http://localhost:8000/user-tokens/' + item.id, {
         method: 'DELETE',
         credentials: 'include',
       })
@@ -73,7 +73,7 @@ export default {
             return;
           }
 
-          this.sessions = this.sessions.filter(session => session.id !== item.id)
+          this.userTokens = this.userTokens.filter(userToken => userToken.id !== item.id)
         })
         .catch(err => {
           console.error(err)
@@ -81,7 +81,7 @@ export default {
     },
   },
   created() {
-    fetch('http://localhost:8000/sessions', {
+    fetch('http://localhost:8000/user-tokens', {
       credentials: 'include',
     })
       .then(res => {
@@ -93,7 +93,7 @@ export default {
         return res.json()
       })
       .then(json => {
-        this.sessions = json
+        this.userTokens = json
       })
       .catch(err => {
         console.error(err)

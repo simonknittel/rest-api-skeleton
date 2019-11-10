@@ -138,6 +138,20 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/user-tokens',
+    component: PrivateFrame,
+    beforeEnter: (to, from, next) => {
+      checkAuthentication(to, from, next)
+    },
+    children: [
+      {
+        path: '',
+        name: 'userTokens',
+        component: () => import(/* webpackChunkName: "userTokens" */ '../views/UserTokens.vue'),
+      }
+    ]
+  },
 ]
 
 const router = new VueRouter({
