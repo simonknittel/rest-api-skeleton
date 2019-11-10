@@ -1,6 +1,4 @@
-// Models
-import VerifyEmailToken from '../../models/VerifyEmailToken.mjs'
-import User from '../../models/User.mjs'
+import verifyEmail from '../../shared/verifyEmail.mjs'
 
 export default function verifyEmailRoute(req, res) {
   verifyEmail(req.query.token)
@@ -27,26 +25,4 @@ export default function verifyEmailRoute(req, res) {
           .end()
       }
     })
-}
-
-function verifyEmail(token) {
-  return new Promise((resolve, reject) => {
-    VerifyEmailToken
-      .findOne({ where: { token }, include: [{ model: User }] })
-      .then(result => {
-        if (result === null) return reject({ type: 1 })
-
-        User
-          .update({ emailVerified: true }, { where: { id: result.user.id } })
-          .then(() => {
-            // Delete token
-            VerifyEmailToken
-              .destroy({ where: { token } })
-              .then(resolve)
-              .catch(err => reject({ type: 4, data: err }))
-          })
-          .catch(err => reject({ type: 3, data: err }))
-      })
-      .catch(err => reject({ type: 2, data: err }))
-  })
 }

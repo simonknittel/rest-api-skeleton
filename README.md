@@ -6,7 +6,7 @@ _TODO: Add description_
 
 ## Features
 
-* Users can register an account with email and password
+* Users can signup an account with email and password
 * Users have to verify their email to be able to log in
 * Users can log in and log out
 * Users can get a permission role assigned

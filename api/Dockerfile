@@ -9,7 +9,7 @@ RUN apk add --no-cache --virtual builds-deps build-base python
 COPY gc-service-account.json ./
 
 COPY package*.json ./
-RUN npm install --production
+RUN npm ci --production
 
 COPY src ./src/
 

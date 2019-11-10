@@ -1,9 +1,4 @@
-// Dependencies
-import uuidv4 from 'uuid/v4.js'
-
-// Models
-import User from '../../models/User.mjs'
-import PasswordResetToken from '../../models/PasswordResetToken.mjs'
+import requestPasswordReset from '../../shared/requestPasswordReset.mjs'
 
 export default function requestPasswordResetRoute(req, res) {
   requestPasswordReset(req.body.login)
@@ -30,34 +25,4 @@ export default function requestPasswordResetRoute(req, res) {
           .end()
       }
     })
-}
-
-function requestPasswordReset(login) {
-  return new Promise((resolve, reject) => {
-    // Search user to corresponding email address
-    User
-      .findOne({ where: { email: login } })
-      .then(result => {
-        if (result === null) return reject({ type: 1 })
-
-        const token = uuidv4()
-
-        PasswordResetToken
-          .create({ token, userId: user.id })
-          .then(() => {
-            const email = new Email(
-              user.email,
-              'Someone requested to reset your password',
-              `<a href="${config.setNewPasswordRoute}?token=${token}">Click here to reset your password</a>`, // TODO: Change this to client when there has been added one
-            )
-
-            email
-              .send()
-              .then(resolve)
-              .catch(failure => reject(failure))
-          })
-          .catch(err => reject({ type: 3, data: err }))
-      })
-      .catch(err => reject({ type: 2, data: err }))
-  })
 }
