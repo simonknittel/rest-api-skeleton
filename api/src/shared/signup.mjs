@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 import config from '../config.mjs'
 
 import User from '../models/User.mjs'
-import VerifyEmailToken from '../models/VerifyEmailToken.mjs'
+import UserToken from '../models/UserToken.mjs'
 import Email from './email.mjs'
 
 export default function signup(login, password) {
@@ -47,8 +47,8 @@ function triggerVerifyEmail(user) {
   return new Promise((resolve, reject) => {
     const token = uuidv4()
 
-    VerifyEmailToken
-      .create({ token, userId: user.id })
+    UserToken
+      .create({ token, userId: user.id, type: 'verifyEmail' })
       .then(() => {
         const email = new Email(
           user.email,

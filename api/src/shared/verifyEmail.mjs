@@ -1,11 +1,11 @@
 // Models
-import VerifyEmailToken from '../models/VerifyEmailToken.mjs'
+import UserToken from '../models/UserToken.mjs'
 import User from '../models/User.mjs'
 
 export default function verifyEmail(token) {
   return new Promise((resolve, reject) => {
-    VerifyEmailToken
-      .findOne({ where: { token }, include: [{ model: User }] })
+    UserToken
+      .findOne({ where: { token, type: 'verifyEmail' }, include: [{ model: User }] })
       .then(result => {
         if (result === null) return reject({ type: 1 })
 
@@ -13,7 +13,7 @@ export default function verifyEmail(token) {
           .update({ emailVerified: true }, { where: { id: result.user.id } })
           .then(() => {
             // Delete token
-            VerifyEmailToken
+            UserToken
               .destroy({ where: { token } })
               .then(resolve)
               .catch(err => reject({ type: 4, data: err }))

@@ -1,7 +1,5 @@
 import User from './User.mjs'
 import './Session.mjs'
-import PasswordResetToken from './PasswordResetToken.mjs'
-import VerifyEmailToken from './VerifyEmailToken.mjs'
+import UserToken from './UserToken.mjs'
 
-PasswordResetToken.belongsTo(User)
-VerifyEmailToken.belongsTo(User)
+UserToken.belongsTo(User)

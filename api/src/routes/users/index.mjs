@@ -3,7 +3,7 @@ import express from 'express'
 // Middleware
 import allowedMethods from '../../middleware/allowedMethods.mjs'
 import authenticateMiddleware from '../../middleware/authenticate.mjs'
-import checkPermissionsMiddleware from '../../middleware/checkPermissions.mjs'
+import isAllowedMiddleware from '../../middleware/isAllowed.mjs'
 
 // Routes
 import getRoute from './get.mjs'
@@ -12,17 +12,17 @@ import postRoute from './post.mjs'
 import putRoute from './put.mjs'
 import deleteRoute from './delete.mjs'
 
-const usersRouter = express.Router()
+const router = express.Router()
 
-usersRouter.route('/')
+router.route('/')
   .get(getAllRoute)
-  .post(authenticateMiddleware, checkPermissionsMiddleware([1]), postRoute)
+  .post(authenticateMiddleware, isAllowedMiddleware([1]), postRoute)
   .all(allowedMethods(['GET', 'POST', ]))
 
-usersRouter.route('/:id')
+router.route('/:id')
   .get(getRoute)
   .put(authenticateMiddleware, putRoute)
-  .delete(authenticateMiddleware, checkPermissionsMiddleware([1]), deleteRoute)
+  .delete(authenticateMiddleware, isAllowedMiddleware([1]), deleteRoute)
   .all(allowedMethods(['GET', 'PUT', 'DELETE']))
 
-export default usersRouter
+export default router

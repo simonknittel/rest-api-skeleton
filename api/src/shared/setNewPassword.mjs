@@ -4,14 +4,14 @@ import bcrypt from 'bcrypt'
 import config from '../config.mjs'
 
 // Models
-import PasswordResetToken from '../models/PasswordResetToken.mjs'
+import UserToken from '../models/UserToken.mjs'
 import User from '../models/User.mjs'
 
 export default function setNewPassword(token, password) {
   return new Promise((resolve, reject) => {
     // Check token on validility
-    PasswordResetToken
-      .findOne({ where: { token }, include: [{ model: User }] })
+    UserToken
+      .findOne({ where: { token, type: 'passwordReset' }, include: [{ model: User }] })
       .then(result => {
         if (result === null) return reject({ type: 1 })
 
@@ -28,7 +28,7 @@ export default function setNewPassword(token, password) {
               .update({ password: hash }, { where: { id: result.user.id } })
               .then(() => {
                 // Delete token
-                PasswordResetToken
+                UserToken
                   .destroy({ where: { token } })
                   .then(resolve)
                   .catch(err => reject({ type: 5, data: err }))

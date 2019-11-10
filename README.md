@@ -18,6 +18,7 @@ _TODO: Add description_
 * Fully dockerized
 * Users can reset their passwords
 * Image upload via Cloudinary
+* Web interface for admins
 
 
 ## During development
@@ -25,7 +26,7 @@ _TODO: Add description_
 _TODO: Add instructions_
 
 
-## 🎁 Support
+## ? Support
 
 _"Donations are not required but always appreciated."_
 
@@ -34,7 +35,7 @@ Like this quote implies, I won't stop make things open source, if there are no d
 [![Become a patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://patreon.com/simonknittel)
 
 
-## ©️ License
+## ? License
 Copyright 2019 Simon Knittel (<https://simonknittel.de>)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:

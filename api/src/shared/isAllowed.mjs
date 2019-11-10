@@ -1,18 +1,7 @@
+// Models
 import User from '../models/User.mjs'
 
-export default function checkPermissionsMiddleware(allowedRanks) {
-  return (req, res, next) => {
-    checkPermissions(res.locals.authentication.userId, allowedRanks)
-      .then(next)
-      .catch(() => {
-        return res
-          .status(403)
-          .end()
-      })
-  }
-}
-
-function checkPermissions(userId, allowedRanks) {
+export default function isAllowed(userId, allowedRanks) {
   return new Promise((resolve, reject) => {
     // admin credentials has been used
     if (userId === 0) return resolve()

@@ -1,6 +1,4 @@
-import jwt from 'jsonwebtoken'
-import config from '../config.mjs'
-import Session from '../models/Session.mjs'
+import authenticate from '../shared/authenticate.mjs'
 
 export default function authenticateMiddleware(req, res, next) {
   if (!req.cookies.jwt) {
@@ -34,26 +32,4 @@ export default function authenticateMiddleware(req, res, next) {
           .end()
       }
     })
-}
-
-/**
- * Verifies a provided JWT and checks it against the database. Returns the decoded JWT.
- *
- * @param {String} token
- * @returns {Object} Decoded JWT
- */
-function authenticate(token) {
-  return new Promise((resolve, reject) => {
-    Session
-      .findOne({ where: { token } })
-      .then(result => {
-        if (result === null) return reject({ type: 1 })
-
-        jwt.verify(token, config.jwt.secret, (err, decoded) => {
-          if (err) return reject({ type: 1 })
-          resolve(decoded)
-        })
-      })
-      .catch(err => reject({ type: 2, data: err }))
-  })
 }

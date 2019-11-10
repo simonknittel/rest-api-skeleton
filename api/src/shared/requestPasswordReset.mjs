@@ -3,7 +3,7 @@ import uuidv4 from 'uuid/v4.js'
 
 // Models
 import User from '../models/User.mjs'
-import PasswordResetToken from '../models/PasswordResetToken.mjs'
+import UserToken from '../models/UserToken.mjs'
 
 export default function requestPasswordReset(login) {
   return new Promise((resolve, reject) => {
@@ -15,8 +15,8 @@ export default function requestPasswordReset(login) {
 
         const token = uuidv4()
 
-        PasswordResetToken
-          .create({ token, userId: user.id })
+        UserToken
+          .create({ token, userId: user.id, type: 'passwordReset' })
           .then(() => {
             const email = new Email(
               user.email,
