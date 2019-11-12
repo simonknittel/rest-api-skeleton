@@ -21,6 +21,8 @@ export default function authenticateMiddleware(req, res, next) {
       next()
     })
     .catch(err => {
+      // TODO: Rework so that unauthenticated requests still can get pass but
+      // may get different results from the route
       if (err.type === 1) {
         res
           .status(401)

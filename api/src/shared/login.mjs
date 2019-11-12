@@ -6,7 +6,7 @@ import config from '../config.mjs'
 import User from '../models/User.mjs'
 import Session from '../models/Session.mjs'
 
-import isAllowed from './isAllowed.mjs'
+import { isAllowed } from './isAllowed.mjs'
 
 /**
  * Verifies login and password. Returns a signed JWT containing the user's id and rank.

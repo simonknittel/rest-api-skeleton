@@ -14,31 +14,36 @@ const roles = {
   ],
 }
 
-export default function isAllowed(userId, requiredPermission) {
+export function isAllowed(userId, requiredPermission) {
   return new Promise((resolve, reject) => {
     User
       .findOne({ where: { id: userId } })
       .then(result => {
-        if (result.permissionRole === 0) return reject()
-
-        // Admin bypass
-        if (result.permissionRole === 1) return resolve()
-
-        // Allowed via permission role
-        if (roles[result.permissionRole].indexOf(requiredPermission) >= 0) {
-          // Rejected via blacklisted permissions
-          if (result.blacklistedPermissions && result.blacklistedPermissions.indexOf(requiredPermission) >= 0) {
-            return reject()
-          }
-
-          return resolve()
-
-        // Allowed via whitelisted permissions
-        } else if (result.whitelistedPermissions && result.whitelistedPermissions.indexOf(requiredPermission) >= 0) {
-          return resolve()
-        }
-
-        reject()
+        if (isAllowedByUser(result, requiredPermission)) resolve()
+        else reject()
       })
   })
+}
+
+export function isAllowedByUser(user, requiredPermission) {
+  if (user.permissionRole === 0) return false
+
+  // Admin bypass
+  if (user.permissionRole === 1) return true
+
+  // Allowed via permission role
+  if (roles[user.permissionRole].indexOf(requiredPermission) >= 0) {
+    // Rejected via blacklisted permissions
+    if (user.blacklistedPermissions && user.blacklistedPermissions.indexOf(requiredPermission) >= 0) {
+      return false
+    }
+
+    return true
+
+  // Allowed via whitelisted permissions
+  } else if (user.whitelistedPermissions && user.whitelistedPermissions.indexOf(requiredPermission) >= 0) {
+    return true
+  }
+
+  return false
 }

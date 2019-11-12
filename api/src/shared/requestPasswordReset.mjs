@@ -5,7 +5,7 @@ import uuidv4 from 'uuid/v4.js'
 import User from '../models/User.mjs'
 import UserToken from '../models/UserToken.mjs'
 
-import isAllowed from './isAllowed.mjs'
+import { isAllowedByUser } from './isAllowed.mjs'
 
 export default function requestPasswordReset(login) {
   return new Promise((resolve, reject) => {
@@ -15,7 +15,7 @@ export default function requestPasswordReset(login) {
       .then(result => {
         if (result === null) return reject({ type: 1 })
 
-        isAllowed(result.id, 'passwordReset')
+        isAllowedByUser(result, 'passwordReset')
           .then(() => {
             const token = uuidv4()
 
