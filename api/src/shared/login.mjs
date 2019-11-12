@@ -6,7 +6,7 @@ import config from '../config.mjs'
 import User from '../models/User.mjs'
 import Session from '../models/Session.mjs'
 
-import { isAllowed } from './isAllowed.mjs'
+import { isAllowedByUser } from './isAllowed.mjs'
 
 /**
  * Verifies login and password. Returns a signed JWT containing the user's id and rank.
@@ -36,7 +36,7 @@ export default function login(login, password, userAgent = null) {
             .then(result => {
               if (result === false) return reject({ type: 2 })
 
-              isAllowed(user.id, 'login')
+              isAllowedByUser(user, 'login')
                 .then(() => {
                   if (!user.emailVerified) return reject({ type: 4 })
 
