@@ -5,10 +5,10 @@ import Session from '../models/Session.mjs'
 import User from '../models/User.mjs'
 
 /**
- * Verifies a provided JWT and checks it against the database. Returns the decoded JWT.
+ * Verifies a provided session id and checks it against the database. Returns the corresponding user.
  *
  * @param {String} token
- * @returns {Object} Decoded JWT
+ * @returns {Object} User
  */
 export default function authenticate(token) {
   return new Promise((resolve, reject) => {

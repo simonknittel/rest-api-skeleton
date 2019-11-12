@@ -5,7 +5,7 @@ if (!process.env.DB_USER) missingConfig.push('DB_USER')
 if (!process.env.DB_PASS) missingConfig.push('DB_PASS')
 if (!process.env.DB_NAME) missingConfig.push('DB_NAME')
 
-if (!process.env.JWT_SECRET) missingConfig.push('JWT_SECRET')
+if (!process.env.SESSION_SECRET) missingConfig.push('SESSION_SECRET')
 
 if (!process.env.MAILGUN_DOMAIN) missingConfig.push('MAILGUN_DOMAIN')
 if (!process.env.MAILGUN_KEY) missingConfig.push('MAILGUN_KEY')
@@ -27,7 +27,7 @@ const config = {
     name: process.env.DB_NAME,
   },
   session: {
-    secret: process.env.JWT_SECRET,
+    secret: process.env.SESSION_SECRET,
     maxAge: 1000 * 60 * 60 * 24 * 365, // 365 days / 1 year
   },
   saltRounds: 11,

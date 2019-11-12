@@ -7,12 +7,11 @@ import Session from '../models/Session.mjs'
 import { isAllowedByUser } from './isAllowed.mjs'
 
 /**
- * Verifies login and password. Returns a signed JWT containing the user's id and rank.
+ * Verifies login and password. Returns a session id and corresponding user.
  *
  * @param {String} login
  * @param {String} password
  * @param {String} [userAgent=null]
- * @returns {String} Signed JWT
  */
 export default function login(login, password, userAgent = null) {
   return new Promise((resolve, reject) => {

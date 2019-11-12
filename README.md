@@ -14,7 +14,7 @@ _TODO: Add description_
 * Users can get individual permissions whitelisted or blacklisted overwriting the permission role
 * Uses Mailgun as email service
 * Runs a PostgreSQL database and uses Sequelize as ORM
-* Sessions are handled via a JWT stored in a cookie
+* Sessions are handled via session ID's stored in cookies
 * For each session the user agent if transmitted is saved in the database
 * Fully dockerized
 * Users can reset their passwords
