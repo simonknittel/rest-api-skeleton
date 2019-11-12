@@ -21,8 +21,19 @@
         :search="search"
         sort-by="id"
         :sort-desc="true"
+        :multi-sort="true"
         :loading="tableLoading"
       >
+        <template v-slot:item.active="{ item }">
+          <v-icon small v-if="item.active" color="success">mdi-radiobox-marked</v-icon>
+          <v-icon small v-if="!item.active" color="error">mdi-radiobox-blank</v-icon>
+        </template>
+
+        <!-- TODO: Add "Copy to clipboard" button -->
+        <template v-slot:item.token="{ item }">
+          <span :title="item.token" class="token">{{ item.token }}</span>
+        </template>
+
         <template v-slot:item.action="{ item }">
           <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
         </template>
@@ -94,7 +105,18 @@ export default {
         return res.json()
       })
       .then(json => {
-        this.sessions = json
+        this.sessions = json.map(item => {
+          let active = true
+
+          const createdAtTimestamp = new Date(item.createdAt).getTime()
+          const expirationTimestamp = createdAtTimestamp + 1000 * 60 * 60 * 24 * 365 // TODO: Move to client config
+          if (Date.now() > expirationTimestamp) active = false
+
+          return {
+            ...item,
+            active,
+          }
+        })
       })
       .catch(err => {
         console.error(err)
@@ -105,3 +127,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.token {
+  overflow: hidden;
+  max-width: 400px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+</style>

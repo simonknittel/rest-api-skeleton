@@ -21,6 +21,7 @@
         :search="search"
         sort-by="id"
         :sort-desc="true"
+        :multi-sort="true"
         :loading="tableLoading"
       >
         <template v-slot:item.action="{ item }">
