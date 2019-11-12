@@ -41,7 +41,7 @@ export default function login(login, password, userAgent = null) {
                 .then(token => {
                   Session
                     .create({ token, userAgent, userId: user.id })
-                    .then(() => {resolve({ token, user })})
+                    .then(() => resolve({ token, user }))
                     .catch(err => reject({ id: 3, data: err }))
                 })
             })

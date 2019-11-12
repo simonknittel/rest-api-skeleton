@@ -35,6 +35,7 @@ function filter(items) {
       updatedAt: item.updatedAt,
       token: item.token,
       userAgent: item.userAgent,
+      lastSeen: item.lastSeen,
     }
   })
 }

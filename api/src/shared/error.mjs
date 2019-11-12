@@ -112,6 +112,16 @@ export default function error(err, res) {
     res
       .status(403)
       .json({ error: {id: 5, msg: 'Permission required.'} })
+  } else if (err.id === 26) {
+    console.trace(err)
+    res
+      .status(500)
+      .end()
+  } else if (err.id === 27) {
+    console.trace(err)
+    res
+      .status(500)
+      .end()
   } else if (err.id === 100 || err.id === 101) {
     console.trace(err)
     res

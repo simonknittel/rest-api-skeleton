@@ -4,8 +4,9 @@ import bcrypt from 'bcrypt'
 import config from '../config.mjs'
 
 // Models
-import UserToken from '../models/UserToken.mjs'
 import User from '../models/User.mjs'
+import UserToken from '../models/UserToken.mjs'
+import Session from '../models/Session.mjs'
 
 export default function setNewPassword(token, password) {
   return new Promise((resolve, reject) => {
@@ -30,7 +31,12 @@ export default function setNewPassword(token, password) {
                 // Delete token
                 UserToken
                   .destroy({ where: { token } })
-                  .then(resolve)
+                  .then(() => {
+                    Session
+                      .destroy({ where: { userId: result.user.id }})
+                      .then(resolve)
+                      .catch(err => reject({ id: 26, data: err }))
+                  })
                   .catch(err => reject({ id: 15, data: err }))
               })
               .catch(err => reject({ id: 13, data: err }))

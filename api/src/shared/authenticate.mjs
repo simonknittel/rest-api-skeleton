@@ -1,3 +1,6 @@
+// Dependencies
+import Sequelize from 'sequelize'
+
 import config from '../config.mjs'
 
 // Models
@@ -22,7 +25,10 @@ export default function authenticate(token) {
         const expirationTimestamp = createdAtTimestamp + config.session.maxAge
         if (Date.now() > expirationTimestamp) return reject({ id: 16 })
 
-        resolve(result.user)
+        Session
+          .update({ lastSeen: Sequelize.fn('NOW') }, { where: { id: result.id }})
+          .then(() => resolve(result.user))
+          .catch(err => reject({ id: 27, data: err }))
       })
       .catch(err => reject({ id: 17, data: err }))
   })
