@@ -1,7 +1,5 @@
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-
-import config from '../config.mjs'
+import crypto from 'crypto'
 
 import User from '../models/User.mjs'
 import Session from '../models/Session.mjs'
@@ -40,15 +38,23 @@ export default function login(login, password, userAgent = null) {
 
               if (!user.emailVerified) return reject({ id: 4 })
 
-              // Create token (expires in 31 days / 1 month)
-              const token = jwt.sign({ userId: user.id, permissionRole: user.permissionRole, email: user.email }, config.jwt.secret, { expiresIn: '31d' })
-
-              Session
-                .create({ token, userAgent })
-                .then(() => resolve(token))
-                .catch(err => reject({ id: 3, data: err }))
+              generateSessionToken()
+                .then(token => {
+                  Session
+                    .create({ token, userAgent, userId: user.id })
+                    .then(() => {resolve({ token, user })})
+                    .catch(err => reject({ id: 3, data: err }))
+                })
             })
         })
         .catch(err => reject({ id: 3, data: err }))
+  })
+}
+
+function generateSessionToken() {
+  return new Promise(resolve => {
+    crypto.randomBytes(128, (err, buf) => {
+      resolve(buf.toString('hex'))
+    })
   })
 }

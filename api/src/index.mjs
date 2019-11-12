@@ -19,7 +19,7 @@ import sequelize from './db.mjs'
 const app = express()
 
 app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser())
+app.use(cookieParser(config.session.secret))
 
 // TODO: Maybe replace with individual dependencies
 app.use(helmet({

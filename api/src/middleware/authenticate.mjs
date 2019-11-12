@@ -2,7 +2,7 @@ import error from '../shared/error.mjs'
 import authenticate from '../shared/authenticate.mjs'
 
 export default function authenticateMiddleware(req, res, next) {
-  if (!req.cookies.jwt) {
+  if (!req.signedCookies.session) {
     res
       .status(401)
       .send('No or invalid token for authorization found.')
@@ -14,7 +14,7 @@ export default function authenticateMiddleware(req, res, next) {
    * into e.g. an real JavaScript object which leads to issues during searching
    * for the cookie in the database
    */
-  const token = req.cookies.jwt
+  const token = req.signedCookies.session
 
   authenticate(token)
     .then(authentication => {

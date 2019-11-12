@@ -1,5 +1,3 @@
-import jwt from 'jsonwebtoken'
-import config from '../../config.mjs'
 import error from '../../shared/error.mjs'
 import Session from '../../models/Session.mjs'
 
@@ -9,7 +7,7 @@ export default function logoutRoute(req, res) {
    * into e.g. an real JavaScript object which leads to issues during searching
    * for the cookie in the database
    */
-  const token = req.cookies.jwt
+  const token = req.signedCookies.session
 
   // No token found -> Nothing to log out
   if (!token) {
@@ -17,20 +15,12 @@ export default function logoutRoute(req, res) {
     return
   }
 
-  jwt.verify(token, config.jwt.secret, (err) => {
-    // Provided token invalid -> Nothing to log out
-    if (err) {
-      res.end()
-      return
-    }
-
-    Session
-      .destroy({ where: { token } })
-      .then(() => {
-        res
-          .clearCookie('jwt')
-          .end()
-      })
-      .catch(err => error({ id: 6 , data: err }, res))
-  })
+  Session
+    .destroy({ where: { token } })
+    .then(() => {
+      res
+        .clearCookie('session')
+        .end()
+    })
+    .catch(err => error({ id: 6 , data: err }, res))
 }
