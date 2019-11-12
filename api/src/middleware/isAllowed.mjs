@@ -1,4 +1,4 @@
-import isAllowed from '../shared/isAllowed.mjs'
+import { isAllowed } from '../shared/isAllowed.mjs'
 
 export default function isAllowedMiddleware(allowedRoles) {
   return (req, res, next) => {

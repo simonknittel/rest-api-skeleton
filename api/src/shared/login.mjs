@@ -23,34 +23,32 @@ export default function login(login, password, userAgent = null) {
         || !password
         || login.trim().length <= 0
         || password.length <= 0
-      ) return reject({ type: 1 })
+      ) return reject({ id: 1 })
 
       // Search for real user
       User
         .findOne({ where: { email: login.trim() } })
         .then(user => {
-          if (user === null) return reject({ type: 2 })
+          if (user === null) return reject({ id: 2 })
 
           bcrypt
             .compare(password, user.password)
             .then(result => {
-              if (result === false) return reject({ type: 2 })
+              if (result === false) return reject({ id: 2 })
 
-              isAllowedByUser(user, 'login')
-                .then(() => {
-                  if (!user.emailVerified) return reject({ type: 4 })
+              if (!isAllowedByUser(user, 'login')) return reject({ id: 5 })
 
-                  // Create token (expires in 31 days / 1 month)
-                  const token = jwt.sign({ userId: user.id, permissionRole: user.permissionRole, email: user.email }, config.jwt.secret, { expiresIn: '31d' })
+              if (!user.emailVerified) return reject({ id: 4 })
 
-                  Session
-                    .create({ token, userAgent })
-                    .then(() => resolve(token))
-                    .catch(err => reject({ type: 3, data: err }))
-                })
-                .catch(() => reject({ type: 5 }))
+              // Create token (expires in 31 days / 1 month)
+              const token = jwt.sign({ userId: user.id, permissionRole: user.permissionRole, email: user.email }, config.jwt.secret, { expiresIn: '31d' })
+
+              Session
+                .create({ token, userAgent })
+                .then(() => resolve(token))
+                .catch(err => reject({ id: 3, data: err }))
             })
         })
-        .catch(err => reject({ type: 3, data: err }))
+        .catch(err => reject({ id: 3, data: err }))
   })
 }

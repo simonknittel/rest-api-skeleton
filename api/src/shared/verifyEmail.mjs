@@ -7,7 +7,7 @@ export default function verifyEmail(token) {
     UserToken
       .findOne({ where: { token, type: 'verifyEmail' }, include: [{ model: User }] })
       .then(result => {
-        if (result === null) return reject({ type: 1 })
+        if (result === null) return reject({ id: 7 })
 
         User
           .update({ emailVerified: true }, { where: { id: result.user.id } })
@@ -16,10 +16,10 @@ export default function verifyEmail(token) {
             UserToken
               .destroy({ where: { token } })
               .then(resolve)
-              .catch(err => reject({ type: 4, data: err }))
+              .catch(err => reject({ id: 10, data: err }))
           })
-          .catch(err => reject({ type: 3, data: err }))
+          .catch(err => reject({ id: 9, data: err }))
       })
-      .catch(err => reject({ type: 2, data: err }))
+      .catch(err => reject({ id: 8, data: err }))
   })
 }

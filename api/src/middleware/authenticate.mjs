@@ -1,3 +1,4 @@
+import error from '../shared/error.mjs'
 import authenticate from '../shared/authenticate.mjs'
 
 export default function authenticateMiddleware(req, res, next) {
@@ -20,18 +21,7 @@ export default function authenticateMiddleware(req, res, next) {
       res.locals.authentication = authentication
       next()
     })
-    .catch(err => {
-      // TODO: Rework so that unauthenticated requests still can get pass but
-      // may get different results from the route
-      if (err.type === 1) {
-        res
-          .status(401)
-          .send('No or invalid token for authorization found.')
-      } else if (err.type === 2) {
-        console.error(err.data)
-        res
-          .status(500)
-          .end()
-      }
-    })
+    // TODO: Rework so that unauthenticated requests still can get pass but
+    // may get different results from the route
+    .catch(err => error(err, res))
 }

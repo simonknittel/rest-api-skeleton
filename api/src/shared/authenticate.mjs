@@ -17,13 +17,13 @@ export default function authenticate(token) {
     Session
       .findOne({ where: { token } })
       .then(result => {
-        if (result === null) return reject({ type: 1 })
+        if (result === null) return reject({ id: 16 })
 
         jwt.verify(token, config.jwt.secret, (err, decoded) => {
-          if (err) return reject({ type: 1 })
+          if (err) return reject({ id: 16 })
           resolve(decoded)
         })
       })
-      .catch(err => reject({ type: 2, data: err }))
+      .catch(err => reject({ id: 17, data: err }))
   })
 }

@@ -16,7 +16,7 @@ export default function signup(login, password) {
       || login.trim().length <= 0
       || password.length <= 0
     ) {
-      return reject({ type: 1 })
+      return reject({ id: 18 })
     }
 
     bcrypt
@@ -34,9 +34,9 @@ export default function signup(login, password) {
           })
           .catch(err => {
             if (err.name === 'SequelizeUniqueConstraintError') {
-              reject({ type: 5, data: err })
+              reject({ id: 20, data: err })
             } else {
-              reject({ type: 2, data: err })
+              reject({ id: 19, data: err })
             }
           })
       })
@@ -61,6 +61,6 @@ function triggerVerifyEmail(user) {
           .then(resolve)
           .catch(failure => reject(failure))
       })
-      .catch(err => reject({ type: 3, data: err }))
+      .catch(err => reject({ id: 21, data: err }))
   })
 }

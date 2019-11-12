@@ -25,7 +25,7 @@ export default class Email {
         res.on('data', d => responseBody += d)
 
         res.on('end', () => {
-          if (res.statusCode >= 400) return reject({ type: 100, data: responseBody })
+          if (res.statusCode >= 400) return reject({ id: 100, data: responseBody })
           resolve()
         })
       })
@@ -42,7 +42,7 @@ export default class Email {
 
       req.end()
 
-      if (failure) return reject({ type: 101, data: failure })
+      if (failure) return reject({ id: 101, data: failure })
     })
   }
 }

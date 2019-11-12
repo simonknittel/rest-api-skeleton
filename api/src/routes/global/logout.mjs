@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import config from '../../config.mjs'
+import error from '../../shared/error.mjs'
 import Session from '../../models/Session.mjs'
 
 export default function logoutRoute(req, res) {
@@ -30,11 +31,6 @@ export default function logoutRoute(req, res) {
           .clearCookie('jwt')
           .end()
       })
-      .catch(err => {
-        console.error(err)
-        res
-          .status(500)
-          .end()
-      })
+      .catch(err => error({ id: 6 , data: err }, res))
   })
 }

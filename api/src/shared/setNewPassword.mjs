@@ -13,11 +13,11 @@ export default function setNewPassword(token, password) {
     UserToken
       .findOne({ where: { token, type: 'passwordReset' }, include: [{ model: User }] })
       .then(result => {
-        if (result === null) return reject({ type: 1 })
+        if (result === null) return reject({ id: 11 })
 
         // Check token on expiration
         const difference = Date.now() - new Date(result.createdAt).getTime()
-        if (difference > config.resetPasswordTokenExpiration) return reject({ type: 4 })
+        if (difference > config.resetPasswordTokenExpiration) return reject({ id: 14 })
 
         // Hash new password
         bcrypt
@@ -31,11 +31,11 @@ export default function setNewPassword(token, password) {
                 UserToken
                   .destroy({ where: { token } })
                   .then(resolve)
-                  .catch(err => reject({ type: 5, data: err }))
+                  .catch(err => reject({ id: 15, data: err }))
               })
-              .catch(err => reject({ type: 3, data: err }))
+              .catch(err => reject({ id: 13, data: err }))
           })
       })
-      .catch(err => reject({ type: 2, data: err }))
+      .catch(err => reject({ id: 12, data: err }))
   })
 }

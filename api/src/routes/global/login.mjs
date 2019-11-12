@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 
 import config from '../../config.mjs'
+import error from '../../shared/error.mjs'
 import login from '../../shared/login.mjs'
 
 export default function loginRoute(req, res) {
@@ -18,28 +19,5 @@ export default function loginRoute(req, res) {
           .send(decoded)
       })
     })
-    .catch(err => {
-      if (err.type === 1) {
-        res
-          .status(400)
-          .json({ error: {id: 1, msg: 'E-mail address or password missing.'} })
-      } else if (err.type === 2) {
-        res
-          .status(401)
-          .json({ error: {id: 2, msg: 'E-mail address or password wrong.'} })
-      } else if (err.type === 3) {
-        console.error(err.data)
-        res
-          .status(500)
-          .end()
-      } else if (err.type === 4) {
-        res
-          .status(403)
-          .json({ error: {id: 4, msg: 'E-mail address is not yet verified.'} })
-      } else if (err.type === 5) {
-        res
-          .status(403)
-          .json({ error: {id: 5, msg: 'Permission required.'} })
-      }
-    })
+    .catch(err => error(err, res))
 }
