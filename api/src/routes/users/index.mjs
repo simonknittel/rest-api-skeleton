@@ -21,7 +21,7 @@ router.route('/')
 
 router.route('/:id')
   .get(getRoute)
-  .put(authenticateMiddleware, putRoute)
+  .put(authenticateMiddleware, isAllowedMiddleware('route:users:put'), putRoute)
   .delete(authenticateMiddleware, isAllowedMiddleware('route:users:delete'), deleteRoute)
   .all(allowedMethods(['GET', 'PUT', 'DELETE']))
 

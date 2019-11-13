@@ -67,15 +67,6 @@ export default function error(err, res) {
     res
       .status(500)
       .end()
-  } else if (err.id === 16) {
-    res
-      .status(401)
-      .send('No or invalid token for authorization found.')
-  } else if (err.id === 17) {
-    console.trace(err)
-    res
-      .status(500)
-      .end()
   } else if (err.id === 18) {
     res
       .status(400)
@@ -113,11 +104,6 @@ export default function error(err, res) {
       .status(403)
       .json({ error: {id: 5, msg: 'Permission required.'} })
   } else if (err.id === 26) {
-    console.trace(err)
-    res
-      .status(500)
-      .end()
-  } else if (err.id === 27) {
     console.trace(err)
     res
       .status(500)
