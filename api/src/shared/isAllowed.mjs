@@ -11,6 +11,7 @@ import User from '../models/User.mjs'
 const roles = {
   2: [
     'route:global:authenticated',
+    'route:users:put',
   ],
 }
 

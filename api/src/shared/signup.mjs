@@ -1,12 +1,12 @@
 // Dependencies
-import uuidv4 from 'uuid/v4.js'
 import bcrypt from 'bcrypt'
 
 import config from '../config.mjs'
 
+// Models
 import User from '../models/User.mjs'
-import UserToken from '../models/UserToken.mjs'
-import Email from './email.mjs'
+
+import triggerVerifyEmail from './triggerVerifyEmail.mjs'
 
 export default function signup(login, password) {
   return new Promise((resolve, reject) => {
@@ -28,7 +28,7 @@ export default function signup(login, password) {
             password: hash,
           })
           .then(createdUser => {
-            triggerVerifyEmail(createdUser)
+            triggerVerifyEmail(createdUser.id, createdUser.email)
               .then(resolve)
               .catch(err => reject(err))
           })
@@ -40,27 +40,5 @@ export default function signup(login, password) {
             }
           })
       })
-  })
-}
-
-function triggerVerifyEmail(user) {
-  return new Promise((resolve, reject) => {
-    const token = uuidv4()
-
-    UserToken
-      .create({ token, userId: user.id, type: 'verifyEmail' })
-      .then(() => {
-        const email = new Email(
-          user.email,
-          'Verify your email address',
-          `<a href="${config.verifyEmailRoute}?token=${token}">Click here to verify your email address</a>`, // TODO: Change this to client when there has been added one
-        )
-
-        email
-          .send()
-          .then(resolve)
-          .catch(failure => reject(failure))
-      })
-      .catch(err => reject({ id: 21, data: err }))
   })
 }

@@ -108,6 +108,23 @@ export default function error(err, res) {
     res
       .status(500)
       .end()
+  } else if (err.id === 27) {
+    res
+      .status(403)
+      .end()
+  } else if (err.id === 28) {
+    console.trace(err)
+    res
+      .status(500)
+      .end()
+  } else if (err.id === 29) {
+    res
+      .status(403)
+      .end()
+  } else if (err.id === 30) {
+    res
+      .status(400)
+      .end()
   } else if (err.id === 100 || err.id === 101) {
     console.trace(err)
     res

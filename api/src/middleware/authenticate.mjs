@@ -2,6 +2,8 @@ import error from '../shared/error.mjs'
 import authenticate from '../shared/authenticate.mjs'
 
 export default function authenticateMiddleware(req, res, next) {
+  res.locals.authentication = null
+
   /**
    * BUG: cookie-parser tries to automatically convert the value of the cookie
    * into e.g. an real JavaScript object which leads to issues during searching
@@ -9,10 +11,7 @@ export default function authenticateMiddleware(req, res, next) {
    */
    const token = req.signedCookies.session
 
-   if (!token) {
-    res.locals.authentication = null
-    return next()
-   }
+   if (!token) return next()
 
   authenticate(token)
     .then(authentication => {
