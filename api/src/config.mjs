@@ -12,6 +12,7 @@ if (!process.env.MAILGUN_KEY) missingConfig.push('MAILGUN_KEY')
 if (!process.env.MAILGUN_FROM) missingConfig.push('MAILGUN_FROM')
 
 if (!process.env.PORT) missingConfig.push('PORT')
+if (!process.env.CORS_ORIGIN) missingConfig.push('CORS_ORIGIN')
 if (!process.env.VERIFY_EMAIL_ROUTE) missingConfig.push('VERIFY_EMAIL_ROUTE')
 if (!process.env.SET_NEW_PASSWORD_ROUTE) missingConfig.push('SET_NEW_PASSWORD_ROUTE')
 
@@ -36,6 +37,9 @@ const config = {
   host: process.env.HOST,
   verifyEmailRoute: process.env.VERIFY_EMAIL_ROUTE,
   setNewPasswordRoute: process.env.SET_NEW_PASSWORD_ROUTE,
+  cors: {
+    origin: process.env.CORS_ORIGIN,
+  },
   mailgun: {
     domain: process.env.MAILGUN_DOMAIN,
     key: process.env.MAILGUN_KEY,

@@ -35,7 +35,7 @@ app.use(helmet({
 }))
 
 app.use(cors({
-  origin: 'http://localhost:8080', // TODO: Make configurable
+  origin: config.cors.origin,
   credentials: true,
 }))
 
