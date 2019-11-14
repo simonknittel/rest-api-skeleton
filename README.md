@@ -26,15 +26,19 @@ _TODO: Add description_
 
 _TODO: Add instructions_
 
-## Manual deployment to Google's Container Registry, Cloud Run and Cloud SQL
+## Manual deployment to Google Cloud
 
-1. Tag local images;
-   * `docker tag api eu.gcr.io/rest-api-skeleton/api`
-   * `docker tag admin_web_interface eu.gcr.io/rest-api-skeleton/admin_web_interface`
-2. Push local images to Gcloud's Container Registry:
+_TODO_
+
+1. Build images locally:
+    * `docker-compose build api admin_web_interface`
+2. Tag local images:
+   * `docker tag rest-api-skeleton_api eu.gcr.io/rest-api-skeleton/api`
+   * `docker tag rest-api-skeleton_admin_web_interface eu.gcr.io/rest-api-skeleton/admin_web_interface`
+3. Push local images to Gcloud's Container Registry:
     * `docker push eu.gcr.io/rest-api-skeleton/api`
     * `docker push eu.gcr.io/rest-api-skeleton/admin_web_interface`
-3. Deploy Cloud Run Services:
+4. Deploy Cloud Run Services:
     * `gcloud beta run deploy --image eu.gcr.io/rest-api-skeleton/api --platform managed --region europe-west1 --max-instances 1`
     * `gcloud beta run deploy --image eu.gcr.io/rest-api-skeleton/admin_web_interface --platform managed --region europe-west1 --max-instances 1`
 
