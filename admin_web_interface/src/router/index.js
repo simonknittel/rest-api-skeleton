@@ -152,6 +152,30 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/verify-email',
+    beforeEnter: (to, from, next) => {
+      if (!to.query.token) {
+        store.commit('showVerifyEmail', 'error')
+        return next({ name: 'home' })
+      }
+
+      fetch('http://localhost:8000/verify-email?token=' + to.query.token)
+        .then(res => {
+          if (res.status === 200) {
+            store.commit('showVerifyEmail', 'success')
+            next({ name: 'home' })
+          } else {
+            store.commit('showVerifyEmail', 'error')
+            next({ name: 'home' })
+          }
+        })
+        .catch(() => {
+          store.commit('showVerifyEmail', 'error')
+          next({ name: 'home' })
+        })
+    },
+  },
 ]
 
 const router = new VueRouter({

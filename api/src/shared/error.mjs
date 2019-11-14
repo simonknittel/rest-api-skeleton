@@ -27,7 +27,7 @@ export default function error(err, res) {
       .end()
   } else if (err.id === 7) {
     res
-      .status(401)
+      .status(404)
       .end()
   } else if (err.id === 8) {
     console.trace(err)

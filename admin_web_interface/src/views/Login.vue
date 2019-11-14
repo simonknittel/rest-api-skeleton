@@ -1,6 +1,8 @@
 <template>
   <v-row align="center" justify="center">
     <v-col cols="12" md="2" sm="6">
+      <VerifyEmail />
+
       <v-card>
         <v-card-title>Login</v-card-title>
 
@@ -38,8 +40,12 @@
 
 <script>
 import router from '@/router'
+import VerifyEmail from '@/components/VerifyEmail.vue'
 
 export default {
+  components: {
+    VerifyEmail,
+  },
   data() {
     return {
       email: '',

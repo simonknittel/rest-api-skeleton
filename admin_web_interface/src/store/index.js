@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     authentication: null,
+    verifyEmail: null,
   },
   mutations: {
     storeAuthentication (state, payload) {
@@ -13,7 +14,13 @@ export default new Vuex.Store({
     },
     clearAuthentication (state) {
       state.authentication = null
-    }
+    },
+    showVerifyEmail (state, payload) {
+      state.verifyEmail = payload
+    },
+    hideVerifyEmail (state) {
+      state.verifyEmail = null
+    },
   },
   actions: {
   },
