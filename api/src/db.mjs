@@ -7,8 +7,14 @@ const sequelize = new Sequelize(
   config.db.pass,
   {
     host: config.db.host,
-    dialect: 'postgres'
-  }
+    dialect: 'postgres',
+    define: {
+      charset: 'utf8',
+      dialectOptions: {
+        collate: 'utf8_unicode_ci'
+      },
+    },
+  },
 )
 
 export default sequelize

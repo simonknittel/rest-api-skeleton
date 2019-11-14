@@ -16,7 +16,7 @@ User.init({
   permissionRole: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    defaultValue: 0,
+    defaultValue: 2,
   },
   whitelistedPermissions: {
     type: Sequelize.STRING,
