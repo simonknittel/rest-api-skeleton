@@ -14,7 +14,7 @@ import { isAllowedByUser } from './isAllowed.mjs'
  * @param {String} password
  * @param {String} [userAgent=null]
  */
-export default function login(login, password, userAgent = null) {
+export default function login(login, password, options) {
   return new Promise((resolve, reject) => {
     if (
         !login
@@ -38,6 +38,9 @@ export default function login(login, password, userAgent = null) {
               if (!isAllowedByUser(user, 'login')) return reject({ id: 5 })
 
               if (!user.emailVerified) return reject({ id: 4 })
+
+              let userAgent = null;
+              if (options.userAgent) userAgent = options.userAgent
 
               generateSessionToken()
                 .then(token => {

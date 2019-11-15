@@ -5,7 +5,7 @@ import login from '../../shared/login.mjs'
 export default function loginRoute(req, res) {
   const userAgent = req.headers['user-agent'] ? req.headers['user-agent'] : null
 
-  login(req.body.login, req.body.password, userAgent)
+  login(req.body.login, req.body.password, { userAgent })
     .then(({token, user}) => {
       const filteredUser = {
         id: user.id,
@@ -23,6 +23,7 @@ export default function loginRoute(req, res) {
           httpOnly: true,
           maxAge: config.session.maxAge,
           signed: true,
+          secure: process.env.NODE_ENV === 'production',
         })
         .send(filteredUser)
     })
