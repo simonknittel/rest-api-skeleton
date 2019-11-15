@@ -16,8 +16,6 @@ if (!process.env.CORS_ORIGIN) missingConfig.push('CORS_ORIGIN')
 if (!process.env.VERIFY_EMAIL_ROUTE) missingConfig.push('VERIFY_EMAIL_ROUTE')
 if (!process.env.SET_NEW_PASSWORD_ROUTE) missingConfig.push('SET_NEW_PASSWORD_ROUTE')
 
-if (!process.env.GCLOUD_STORAGE_BUCKET) missingConfig.push('GCLOUD_STORAGE_BUCKET')
-
 if (missingConfig.length > 0) throw Error('Config missing: ' + missingConfig.join(', '))
 
 const config = {
@@ -44,17 +42,6 @@ const config = {
     domain: process.env.MAILGUN_DOMAIN,
     key: process.env.MAILGUN_KEY,
     from: process.env.MAILGUN_FROM,
-  },
-  uploads: {
-    avatars: {
-      localTmp: 'uploads/avatars/',
-      cloudinaryFolder: 'rest-api-skeleton/avatars/',
-    },
-  },
-  gc: {
-    s: {
-      bucket: process.env.GCLOUD_STORAGE_BUCKET,
-    },
   },
 }
 

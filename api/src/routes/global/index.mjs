@@ -13,8 +13,6 @@ import signupRoute from './signup.mjs'
 import verifyEmailRoute from './verifyEmail.mjs'
 import requestPasswordResetRoute from './requestPasswordReset.mjs'
 import setNewPasswordRoute from './setNewPassword.mjs'
-import uploadAvatarGCSRoute from './uploadAvatarGCS.mjs'
-import uploadAvatarCloudinaryRoute from './uploadAvatarCloudinary.mjs'
 import robotsTxtRoute from './robots.txt.mjs'
 
 const router = express.Router()
@@ -29,13 +27,6 @@ router.route('/verify-email').get(verifyEmailRoute).all(allowedMethods(['GET']))
 router.route('/request-password-reset').post(requestPasswordResetRoute).all(allowedMethods(['POST']))
 router.route('/set-new-password').post(setNewPasswordRoute).all(allowedMethods(['POST']))
 
-router.route('/upload/avatar-gcs').post(uploadAvatarGCSRoute).all(allowedMethods(['POST']))
-router.route('/upload/avatar-cloudinary').post(uploadAvatarCloudinaryRoute).all(allowedMethods(['POST']))
-
-// Some special routes
 router.route('/robots.txt').get(robotsTxtRoute).all(allowedMethods(['GET']))
-
-// Some routes for testing (TODO: Get rid of in production)
-router.route('/admin-secured').get(authenticateMiddleware, isAllowedMiddleware('route:global:adminSecured'), (req, res) => { res.send('Admin secured.') }).all(allowedMethods(['GET']))
 
 export default router

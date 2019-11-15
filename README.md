@@ -19,7 +19,6 @@ _TODO: Add description_
 * For each session the user agent, if transmitted, and the time the user has been last seen is saved in the database
 * Fully dockerized
 * Users can reset their passwords
-* Image upload via Cloudinary
 * Web interface for admins
 
 ## Local development

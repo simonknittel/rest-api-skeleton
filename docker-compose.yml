@@ -4,7 +4,6 @@ services:
     build: ./api/
     depends_on:
       - database
-      # - message_queue
     ports:
       - "8000:8000"
     env_file: ./api/.env.local
@@ -22,15 +21,3 @@ services:
     ports:
       - "8008:8008"
     env_file: ./admin_web_interface/.env.local
-
-  # message_queue:
-  #   image: rabbitmq:3.8.0-management-alpine
-  #   ports:
-  #     - "5672:5672"
-  #     - "15672:15672"
-
-  # image_worker:
-  #   build: ./image_worker/
-  #   depends_on:
-  #     - message_queue
-  #   restart: always
