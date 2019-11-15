@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import crypto from 'crypto'
+import validator from 'validator'
 
 import User from '../models/User.mjs'
 import Session from '../models/Session.mjs'
@@ -20,6 +21,7 @@ export default function login(login, password, userAgent = null) {
         || !password
         || login.trim().length <= 0
         || password.length <= 0
+        || !validator.isEmail(login.trim())
       ) return reject({ id: 1 })
 
       // Search for real user

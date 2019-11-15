@@ -26,7 +26,7 @@ _TODO: Add description_
 ### API
 
 1. Install Docker
-2. Run `docker-compose up database api --build` to build and start the containers locally
+2. Run `docker-compose up --build database api` to build and start the containers locally
 
 ### Admin web interface
 

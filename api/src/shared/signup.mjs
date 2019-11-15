@@ -1,5 +1,6 @@
 // Dependencies
 import bcrypt from 'bcrypt'
+import validator from 'validator'
 
 import config from '../config.mjs'
 
@@ -15,6 +16,7 @@ export default function signup(login, password) {
       || !password
       || login.trim().length <= 0
       || password.length <= 0
+      || !validator.isEmail(login.trim())
     ) {
       return reject({ id: 18 })
     }
