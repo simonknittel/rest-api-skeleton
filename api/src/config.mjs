@@ -12,6 +12,7 @@ if (!process.env.MAILGUN_KEY) missingConfig.push('MAILGUN_KEY')
 if (!process.env.MAILGUN_FROM) missingConfig.push('MAILGUN_FROM')
 
 if (!process.env.PORT) missingConfig.push('PORT')
+if (!process.env.HTTPS) missingConfig.push('HTTPS')
 if (!process.env.CORS_ORIGIN) missingConfig.push('CORS_ORIGIN')
 if (!process.env.VERIFY_EMAIL_ROUTE) missingConfig.push('VERIFY_EMAIL_ROUTE')
 if (!process.env.SET_NEW_PASSWORD_ROUTE) missingConfig.push('SET_NEW_PASSWORD_ROUTE')
@@ -32,7 +33,7 @@ const config = {
   saltRounds: 11,
   resetPasswordTokenExpiration: 15 * 60 * 1000, // 15 minutes in miliseconds
   port: process.env.PORT,
-  host: process.env.HOST,
+  https: process.env.HTTPS,
   verifyEmailRoute: process.env.VERIFY_EMAIL_ROUTE,
   setNewPasswordRoute: process.env.SET_NEW_PASSWORD_ROUTE,
   cors: {

@@ -23,7 +23,7 @@ export default function loginRoute(req, res) {
           httpOnly: true,
           maxAge: config.session.maxAge,
           signed: true,
-          secure: process.env.NODE_ENV === 'production',
+          secure: config.https === 'true',
         })
         .send(filteredUser)
     })
