@@ -17,7 +17,7 @@ export default function triggerVerifyEmail(userId, userEmail) {
         const email = new Email(
           userEmail,
           'Verify your email address',
-          `<a href="${config.verifyEmailRoute}?token=${token}">Click here to verify your email address</a>`,
+          `<a href="${config.client.verifyEmailRoute}?token=${token}">Click here to verify your email address</a>`,
         )
 
         email

@@ -35,7 +35,7 @@ app.use(helmet({
 }))
 
 app.use(cors({
-  origin: config.cors.origin,
+  origin: config.client.cors.origin,
   credentials: true,
 }))
 
