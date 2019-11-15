@@ -7,7 +7,7 @@ services:
       # - message_queue
     ports:
       - "8000:8000"
-    env_file: .env
+    env_file: ./api/.env.local
     restart: always
 
   database:
@@ -21,8 +21,7 @@ services:
     build: ./admin_web_interface/
     ports:
       - "8008:8008"
-    environment:
-      PORT: 8008
+    env_file: ./admin_web_interface/.env.local
 
   # message_queue:
   #   image: rabbitmq:3.8.0-management-alpine

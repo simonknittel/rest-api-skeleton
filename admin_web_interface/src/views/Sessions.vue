@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     deleteItem(item) {
-      fetch('http://localhost:8000/sessions/' + item.id, {
+      fetch(process.env.VUE_APP_API_HOST + '/sessions/' + item.id, {
         method: 'DELETE',
         credentials: 'include',
       })
@@ -93,7 +93,7 @@ export default {
     },
   },
   created() {
-    fetch('http://localhost:8000/sessions', {
+    fetch(process.env.VUE_APP_API_HOST + '/sessions', {
       credentials: 'include',
     })
       .then(res => {

@@ -28,7 +28,7 @@ export default {
     logout() {
       this.loading = true
 
-      fetch('http://localhost:8000/logout', {
+      fetch(process.env.VUE_APP_API_HOST + '/logout', {
         credentials: 'include',
       })
         .then(res => {

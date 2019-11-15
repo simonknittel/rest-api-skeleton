@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     deleteItem(item) {
-      fetch('http://localhost:8000/user-tokens/' + item.id, {
+      fetch(process.env.VUE_APP_API_HOST + '/user-tokens/' + item.id, {
         method: 'DELETE',
         credentials: 'include',
       })
@@ -83,7 +83,7 @@ export default {
     },
   },
   created() {
-    fetch('http://localhost:8000/user-tokens', {
+    fetch(process.env.VUE_APP_API_HOST + '/user-tokens', {
       credentials: 'include',
     })
       .then(res => {

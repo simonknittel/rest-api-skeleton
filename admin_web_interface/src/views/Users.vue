@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     deleteItem(item) {
-      fetch('http://localhost:8000/users/' + item.id, {
+      fetch(process.env.VUE_APP_API_HOST + '/users/' + item.id, {
         method: 'DELETE',
         credentials: 'include',
       })
@@ -94,7 +94,7 @@ export default {
     },
   },
   created() {
-    fetch('http://localhost:8000/users')
+    fetch(process.env.VUE_APP_API_HOST + '/users')
       .then(res => {
         if (res.status !== 200) {
           console.error(res)

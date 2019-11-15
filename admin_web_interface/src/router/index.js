@@ -13,7 +13,7 @@ function checkAuthentication(to, from, next, publicFacing = false) {
   // console.log(to, from)
   if (from.name) return next()
 
-  fetch('http://localhost:8000/authenticated', {
+  fetch(process.env.VUE_APP_API_HOST + '/authenticated', {
     credentials: 'include',
   })
     .then(res => {
@@ -160,7 +160,7 @@ const routes = [
         return next({ name: 'home' })
       }
 
-      fetch('http://localhost:8000/verify-email?token=' + to.query.token)
+      fetch(process.env.VUE_APP_API_HOST + '/verify-email?token=' + to.query.token)
         .then(res => {
           if (res.status === 200) {
             store.commit('showVerifyEmail', 'success')

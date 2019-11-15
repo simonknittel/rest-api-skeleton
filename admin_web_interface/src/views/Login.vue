@@ -70,7 +70,7 @@ export default {
       body.append('login', this.email.trim())
       body.append('password', this.password)
 
-      fetch('http://localhost:8000/login', {
+      fetch(process.env.VUE_APP_API_HOST + '/login', {
         method: 'POST',
         credentials: 'include',
         body,

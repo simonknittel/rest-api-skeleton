@@ -71,7 +71,7 @@ export default {
       body.append('login', this.email.trim())
       body.append('password', this.password)
 
-      fetch('http://localhost:8000/signup', {
+      fetch(process.env.VUE_APP_API_HOST + '/signup', {
         method: 'POST',
         body,
       })
