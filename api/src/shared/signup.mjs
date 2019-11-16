@@ -21,26 +21,24 @@ export default function signup(login, password) {
       return reject({ id: 18 })
     }
 
-    bcrypt
-      .hash(password, config.saltRounds)
-      .then(hash => {
-        User
-          .create({
-            email: login.trim(),
-            password: hash,
-          })
-          .then(createdUser => {
-            triggerVerifyEmail(createdUser.id, createdUser.email)
-              .then(resolve)
-              .catch(err => reject(err))
-          })
-          .catch(err => {
-            if (err.name === 'SequelizeUniqueConstraintError') {
-              reject({ id: 20, data: err })
-            } else {
-              reject({ id: 19, data: err })
-            }
-          })
+    const hash = bcrypt.hashSync(password, config.saltRounds)
+
+    User
+      .create({
+        email: login.trim(),
+        password: hash,
+      })
+      .then(createdUser => {
+        triggerVerifyEmail(createdUser.id, createdUser.email)
+          .then(resolve)
+          .catch(err => reject(err))
+      })
+      .catch(err => {
+        if (err.name === 'SequelizeUniqueConstraintError') {
+          reject({ id: 20, data: err })
+        } else {
+          reject({ id: 19, data: err })
+        }
       })
   })
 }

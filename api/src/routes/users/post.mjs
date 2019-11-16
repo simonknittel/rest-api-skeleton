@@ -23,7 +23,7 @@ export default function postRoute(req, res) {
   updates.password = null
   updates.emailVerified = false
   if (req.body.password) updates.password = bcrypt.hashSync(req.body.password, config.saltRounds)
-  if (!updates.password) updates.emailVerified = true
+  if (!updates.password) updates.emailVerified = true // No need to verify the email address if the "set password" email is already going to that email address
   if (updates.password && req.body.emailVerified) updates.emailVerified = req.body.emailVerified === 'true' || false
 
   if (req.body.permissionRole) updates.permissionRole = req.body.permissionRole

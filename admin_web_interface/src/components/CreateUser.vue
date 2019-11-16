@@ -4,7 +4,7 @@
       <v-card class="mt-4">
         <v-card-title>Create new user</v-card-title>
 
-        <v-form @submit.prevent="submit" class="px-4 pb-4">
+        <v-form ref="form" @submit.prevent="submit" class="px-4 pb-4">
           <v-row>
             <v-col cols="12" sm="6">
               <v-text-field
@@ -111,20 +111,16 @@ export default {
         body,
       })
         .then(res => {
-          if (res.status === 200) {
-            res
-              .json()
-              .then(json => {
-                // TODO
-                console.log(json)
-              })
-          } else {
-            // TODO
+          if (res.status !== 200) {
+            console.error(res) // TODO
+            return
           }
+
+          this.$store.dispatch('fetchUsers')
+          this.$refs.form.reset()
         })
         .catch(err => { // Propably an CORS error
-          // TODO
-          console.error('err', err)
+          console.error(err) // TODO
         })
         .finally(() => {
           this.loading = false
