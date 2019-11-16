@@ -10,11 +10,9 @@ This is a project template/skeleton for creating a dockerized REST API with [Exp
 
 * Fully dockerized
 * User managament
-    * Signup
-    * Login/logut
-    * Email verification
+    * Signup/login/logout
+    * Email verification and email change
     * Password reset
-    * Email change
     * Permission roles and invidiual whitelisted or blacklisted permissions
     * Sessions are handled via session ID's stored in cookies
     * For each session the user agent, if transmitted, and the time the user has been last seen is saved in the database
@@ -23,6 +21,7 @@ This is a project template/skeleton for creating a dockerized REST API with [Exp
 * Runs a PostgreSQL database and uses Sequelize as ORM
 * Users can reset their passwords
 * Sample web interface for administration
+* Postman collection & environment (located in the [postman](./api/postman) directory)
 
 ## Local development
 
@@ -34,27 +33,37 @@ This is a project template/skeleton for creating a dockerized REST API with [Exp
 ### Admin web interface
 
 1. Go to the [admin_web_interface](./admin_web_interface) directory
-2. Run `nvm use` (or manually install the Node.js version specified in `.nvmrc`)
+2. Run `nvm use` (or manually install the Node.js version specified in the [.nvmrc](./api/.nvmrc))
 3. Run `npm install`
 4. Run `npm run serve`
 
 ## Manual deployment to Google Cloud
 
-1. Build the admin web interface from within the `admin_web_interface` directory: `npm run build`
-2. Build images locally:
-    * `docker-compose build api admin_web_interface`
-3. Tag local images:
+### API
+
+1. Build image locally:
+    * `docker-compose build api`
+2. Tag local image:
    * `docker tag rest-api-skeleton_api eu.gcr.io/rest-api-skeleton/api`
-   * `docker tag rest-api-skeleton_admin_web_interface eu.gcr.io/rest-api-skeleton/admin_web_interface`
-4. Push local images to Gcloud's Container Registry:
+3. Push local image to Google Cloud Container Registry:
     * `docker push eu.gcr.io/rest-api-skeleton/api`
-    * `docker push eu.gcr.io/rest-api-skeleton/admin_web_interface`
-5. Deploy Cloud Run Services:
+4. Deploy Cloud Run Service:
     * `gcloud beta run deploy --image eu.gcr.io/rest-api-skeleton/api --platform managed --region europe-west1 --max-instances 1`
-    * `gcloud beta run deploy --image eu.gcr.io/rest-api-skeleton/admin_web_interface --platform managed --region europe-west1 --max-instances 1`
-6. On the first deployment the api container/service will fail to boot up because of the missing environmental variables and missing database.
+5. On the first deployment the api container/service will fail to boot up because of the missing environmental variables and missing database.
     1. Set up a PostgreSQL database with Cloud SQL.
-    2. Deploy a new revision of the api service with the database connected and the environmental variables added (see [.env.production](./.env.production) as reference)
+    2. Deploy a new revision of the api service with the database connected and the environmental variables added (see [.env.production](./api/.env.production) as reference)
+
+### Admin web interface
+
+1. Build the admin web interface from within the `admin_web_interface` directory: `npm run build`
+2. Build image locally:
+    * `docker-compose build admin_web_interface`
+3. Tag local image:
+   * `docker tag rest-api-skeleton_admin_web_interface eu.gcr.io/rest-api-skeleton/admin_web_interface`
+4. Push local image to Google Cloud Container Registry:
+    * `docker push eu.gcr.io/rest-api-skeleton/admin_web_interface`
+5. Deploy Cloud Run Service:
+    * `gcloud beta run deploy --image eu.gcr.io/rest-api-skeleton/admin_web_interface --platform managed --region europe-west1 --max-instances 1`
 
 ## License
 
