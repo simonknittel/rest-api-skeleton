@@ -1,5 +1,6 @@
 // Dependencies
 import bcrypt from 'bcrypt'
+import Sequelize from 'sequelize'
 
 import config from '../config.mjs'
 
@@ -8,17 +9,21 @@ import User from '../models/User.mjs'
 import UserToken from '../models/UserToken.mjs'
 import Session from '../models/Session.mjs'
 
+const Op = Sequelize.Op
+
 export default function setNewPassword(token, password) {
   return new Promise((resolve, reject) => {
     // Check token on validility
     UserToken
-      .findOne({ where: { token, type: 'passwordReset' }, include: [{ model: User }] })
+      .findOne({ where: { token, [Op.or]: [ {type: 'passwordReset'}, {type: 'setPassword'} ] }, include: [{ model: User }] })
       .then(result => {
         if (result === null) return reject({ id: 11 })
 
-        // Check token on expiration
-        const difference = Date.now() - new Date(result.createdAt).getTime()
-        if (difference > config.resetPasswordTokenExpiration) return reject({ id: 14 })
+        if (result.type === 'passwordReset') {
+          // Check token on expiration
+          const difference = Date.now() - new Date(result.createdAt).getTime()
+          if (difference > config.resetPasswordTokenExpiration) return reject({ id: 14 })
+        }
 
         // Hash new password
         bcrypt
@@ -30,8 +35,9 @@ export default function setNewPassword(token, password) {
               .then(() => {
                 // Delete token
                 UserToken
-                  .destroy({ where: { token } })
+                  .destroy({ where: { userId: result.user.id, [Op.or]: [ {type: 'passwordReset'}, {type: 'setPassword'} ] } })
                   .then(() => {
+                    // Kill all sessions
                     Session
                       .destroy({ where: { userId: result.user.id }})
                       .then(resolve)

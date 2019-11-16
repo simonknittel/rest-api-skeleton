@@ -12,6 +12,8 @@ const roles = {
   2: [
     'route:global:authenticated',
     'route:users:put',
+    'passwordReset',
+    'login',
   ],
 }
 
@@ -33,16 +35,18 @@ export function isAllowedByUser(user, requiredPermission) {
   if (user.permissionRole === 1) return true
 
   // Allowed via permission role
+  const whitelistedPermissions = user.whitelistedPermissions.split(',')
+  const blacklistedPermissions = user.blacklistedPermissions.split(',')
   if (roles[user.permissionRole].indexOf(requiredPermission) >= 0) {
     // Rejected via blacklisted permissions
-    if (user.blacklistedPermissions && user.blacklistedPermissions.indexOf(requiredPermission) >= 0) {
+    if (blacklistedPermissions && blacklistedPermissions.indexOf(requiredPermission) >= 0) {
       return false
     }
 
     return true
 
   // Allowed via whitelisted permissions
-  } else if (user.whitelistedPermissions && user.whitelistedPermissions.indexOf(requiredPermission) >= 0) {
+  } else if (whitelistedPermissions && whitelistedPermissions.indexOf(requiredPermission) >= 0) {
     return true
   }
 

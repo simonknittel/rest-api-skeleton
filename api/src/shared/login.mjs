@@ -30,6 +30,8 @@ export default function login(login, password, options) {
         .then(user => {
           if (user === null) return reject({ id: 2 })
 
+          if (user.password === null) return reject({ id: 31 })
+
           bcrypt
             .compare(password, user.password)
             .then(result => {

@@ -48,7 +48,7 @@ This is a project template/skeleton for creating a dockerized REST API with [Exp
 3. Push local image to Google Cloud Container Registry:
     * `docker push eu.gcr.io/rest-api-skeleton/api`
 4. Deploy Cloud Run Service:
-    * `gcloud beta run deploy --image eu.gcr.io/rest-api-skeleton/api --platform managed --region europe-west1 --max-instances 1`
+    * `gcloud beta run deploy --image eu.gcr.io/rest-api-skeleton/api --platform managed --region europe-west1`
 5. On the first deployment the api container/service will fail to boot up because of the missing environmental variables and missing database.
     1. Set up a PostgreSQL database with Cloud SQL.
     2. Deploy a new revision of the api service with the database connected and the environmental variables added (see [.env.production](./api/.env.production) as reference)
@@ -63,7 +63,7 @@ This is a project template/skeleton for creating a dockerized REST API with [Exp
 4. Push local image to Google Cloud Container Registry:
     * `docker push eu.gcr.io/rest-api-skeleton/admin_web_interface`
 5. Deploy Cloud Run Service:
-    * `gcloud beta run deploy --image eu.gcr.io/rest-api-skeleton/admin_web_interface --platform managed --region europe-west1 --max-instances 1`
+    * `gcloud beta run deploy --image eu.gcr.io/rest-api-skeleton/admin_web_interface --platform managed --region europe-west1`
 
 ## License
 

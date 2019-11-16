@@ -22,12 +22,12 @@
 					"urlencoded": [
 						{
 							"key": "login",
-							"value": "",
+							"value": "hallo@simonknittel.de",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "",
+							"value": "12345",
 							"type": "text"
 						}
 					]
@@ -61,12 +61,12 @@
 					"urlencoded": [
 						{
 							"key": "login",
-							"value": "",
+							"value": "hallo@simonknittel.de",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "",
+							"value": "12345",
 							"type": "text"
 						}
 					]
@@ -100,8 +100,14 @@
 					"urlencoded": [
 						{
 							"key": "email",
-							"value": "",
+							"value": "hallo@simonknittel.de",
 							"type": "text"
+						},
+						{
+							"key": "emailVerified",
+							"value": "true",
+							"type": "text",
+							"disabled": true
 						}
 					]
 				},
@@ -257,7 +263,7 @@
 					"urlencoded": [
 						{
 							"key": "login",
-							"value": "",
+							"value": "hallo@simonknittel.de",
 							"type": "text"
 						}
 					]
@@ -296,7 +302,7 @@
 						},
 						{
 							"key": "password",
-							"value": "",
+							"value": "12345",
 							"type": "text"
 						}
 					]

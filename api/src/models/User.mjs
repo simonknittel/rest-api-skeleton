@@ -11,7 +11,6 @@ User.init({
   },
   password: {
     type: Sequelize.STRING,
-    allowNull: false,
   },
   permissionRole: {
     type: Sequelize.INTEGER,

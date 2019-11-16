@@ -25,7 +25,7 @@ export default function requestPasswordReset(login) {
             const email = new Email(
               user.email,
               'Someone requested to reset your password',
-              `<a href="${config.client.setNewPasswordRoute}?token=${token}">Click here to reset your password</a>`, // TODO: Change this to client when there has been added one
+              `<a href="${config.client.setNewPasswordRoute}?token=${token}">Click here to reset your password</a>`,
             )
 
             email

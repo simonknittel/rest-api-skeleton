@@ -30,20 +30,17 @@
       </v-data-table>
     </v-card>
 
-    <v-card class="mt-4">
-      <v-card-title>Create new user</v-card-title>
-
-      <v-form class="px-4 pb-4">
-        <div class="d-flex justify-end">
-          <v-btn type="submit" :loading="newUserLoading" color="deep-purple accent-4" dark>Submit</v-btn>
-        </div>
-      </v-form>
-    </v-card>
+    <CreateUser />
   </div>
 </template>
 
 <script>
+import CreateUser from '@/components/CreateUser.vue'
+
 export default {
+  components: {
+    CreateUser,
+  },
   data() {
     return {
       search: '',

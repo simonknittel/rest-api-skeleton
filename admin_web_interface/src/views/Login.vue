@@ -1,6 +1,6 @@
 <template>
   <v-row align="center" justify="center">
-    <v-col cols="12" md="2" sm="6">
+    <v-col cols="12" sm="6" md="2">
       <VerifyEmail />
 
       <v-card>
@@ -97,6 +97,6 @@ export default {
           this.loading = false
         })
     }
-  }
+  },
 }
 </script>
