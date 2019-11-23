@@ -4,14 +4,7 @@ import UserToken from '../../models/UserToken.mjs'
 export default function getRoute(req, res) {
   get(req.params.id)
     .then(item => res.send(item))
-    .catch(err => {
-      if (err.type === 1) {
-        console.error(err.data)
-        res
-          .status(500)
-          .end()
-      }
-    })
+    .catch(err => error(err, res))
 }
 
 function get(id) {
@@ -23,7 +16,7 @@ function get(id) {
 
         resolve(filtered)
       })
-      .catch(err => reject({ type: 1, data: err }))
+      .catch(err => reject({ id: 42, data: err }))
   })
 }
 

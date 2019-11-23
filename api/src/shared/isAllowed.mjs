@@ -29,6 +29,8 @@ export function isAllowed(userId, requiredPermission) {
 }
 
 export function isAllowedByUser(user, requiredPermission) {
+  if (user === null) return false
+
   if (user.permissionRole === 0) return false
 
   // Admin bypass

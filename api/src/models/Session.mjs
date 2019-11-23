@@ -16,10 +16,10 @@ Session.init({
     type: Sequelize.DATE,
     allowNull: false,
     defaultValue: Sequelize.NOW,
-  }
+  },
 }, {
   sequelize,
-  modelName: 'Session'
+  modelName: 'session'
 })
 
 export default Session

@@ -4,14 +4,7 @@ import Session from '../../models/Session.mjs'
 export default function getAllRoute(req, res) {
   getAll()
     .then(items => res.send(items))
-    .catch(err => {
-      if (err.type === 1) {
-        console.error(err.data)
-        res
-          .status(500)
-          .end()
-      }
-    })
+    .catch(err => error(err, res))
 }
 
 function getAll() {
@@ -23,7 +16,7 @@ function getAll() {
 
         resolve(filtered)
       })
-      .catch(err => reject({ type: 1, data: err }))
+      .catch(err => reject({ id: 37, data: err }))
   })
 }
 

@@ -15,7 +15,7 @@ UserToken.init({
   },
 }, {
   sequelize,
-  modelName: 'UserToken',
+  modelName: 'user_token',
 })
 
 export default UserToken

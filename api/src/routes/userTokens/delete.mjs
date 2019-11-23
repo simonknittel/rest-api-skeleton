@@ -4,12 +4,7 @@ import UserToken from '../../models/UserToken.mjs'
 export default function deleteRoute(req, res) {
   destroy(req.params.id)
     .then(() => res.end())
-    .catch(err => {
-      console.error(err)
-      res
-        .status(500)
-        .end()
-    })
+    .catch(err => error(err, res))
 }
 
 function destroy(id) {
@@ -17,6 +12,6 @@ function destroy(id) {
     UserToken
       .destroy({ where: { id }})
       .then(resolve)
-      .catch(err => reject({ type: 1, data: err }))
+      .catch(err => reject({ id: 41, data: err }))
   })
 }

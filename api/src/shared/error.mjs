@@ -2,7 +2,7 @@ export default function error(err, res) {
   let status = null
   const json = {}
 
-  if ([3, 6, 8, 9, 10, 12, 13, 15, 19, 21, 23, 24, 26, 28, 33, 34, 100, 101].indexOf(err.id) >= 0) {
+  if ([3, 6, 8, 9, 10, 12, 13, 15, 19, 21, 23, 24, 26, 28, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 100, 101].indexOf(err.id) >= 0) {
     console.trace(err)
     status = 500
   } else if ([5, 11, 14, 25, 27, 29, 31].indexOf(err.id) >= 0) {
