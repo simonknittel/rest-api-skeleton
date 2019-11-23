@@ -6,24 +6,24 @@
     "test": "jest"
   },
   "dependencies": {
-    "bcrypt": "^3.0.6",
-    "compression": "^1.7.4",
-    "cookie-parser": "^1.4.4",
-    "cors": "^2.8.5",
-    "esm": "^3.2.25",
-    "express": "^4.17.1",
-    "helmet": "^3.21.1",
-    "pg": "^7.12.1",
-    "pg-hstore": "^2.3.3",
-    "sequelize": "^5.19.6",
-    "uuid": "^3.3.3",
-    "validator": "^12.0.0"
+    "bcrypt": "3.0.7",
+    "compression": "1.7.4",
+    "cookie-parser": "1.4.4",
+    "cors": "2.8.5",
+    "esm": "3.2.25",
+    "express": "4.17.1",
+    "helmet": "3.21.2",
+    "pg": "7.14.0",
+    "pg-hstore": "2.3.3",
+    "sequelize": "5.21.2",
+    "uuid": "3.3.3",
+    "validator": "12.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/preset-env": "^7.6.3",
-    "babel-jest": "^24.9.0",
-    "jest": "^24.9.0",
-    "request": "^2.88.0"
+    "@babel/core": "7.7.4",
+    "@babel/preset-env": "7.7.4",
+    "babel-jest": "24.9.0",
+    "jest": "24.9.0",
+    "request": "2.88.0"
   }
 }
