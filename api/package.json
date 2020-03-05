@@ -20,8 +20,8 @@
     "validator": "12.2.0"
   },
   "devDependencies": {
-    "@babel/core": "7.8.6",
-    "@babel/preset-env": "7.8.6",
+    "@babel/core": "7.8.7",
+    "@babel/preset-env": "7.8.7",
     "babel-jest": "24.9.0",
     "jest": "24.9.0",
     "request": "2.88.2"
