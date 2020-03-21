@@ -1,3 +1,5 @@
+import { filterSingleUser } from '../../../../shared/filters.mjs'
+
 // Models
 import User from '../../../../shared/models/User.mjs'
 
@@ -12,23 +14,9 @@ function get(id) {
     User
       .findOne({ where: { id } })
       .then(item => {
-        const filtered = filter(item)
-
+        const filtered = filterSingleUser(item)
         resolve(filtered)
       })
       .catch(err => reject({ id: 39, data: err }))
   })
-}
-
-function filter(item) {
-  return {
-    id: item.id,
-    createdAt: item.createdAt,
-    updatedAt: item.updatedAt,
-    email: item.email,
-    permissionRole: item.permissionRole,
-    whitelistedPermissions: item.whitelistedPermissions,
-    blacklistedPermissions: item.blacklistedPermissions,
-    emailVerified: item.emailVerified,
-  }
 }
