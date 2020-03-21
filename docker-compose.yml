@@ -1,12 +1,25 @@
 version: "3.7"
 services:
-  api:
-    build: ./api/
+  rest:
+    build:
+      context: ./api
+      dockerfile: ./rest/Dockerfile
     depends_on:
       - database
     ports:
       - "8000:8000"
-    env_file: ./api/.env.local
+    env_file: ./api/rest/.env.local
+    restart: always
+
+  graphql:
+    build:
+      context: ./api
+      dockerfile: ./graphql/Dockerfile
+    depends_on:
+      - database
+    ports:
+      - "4000:4000"
+    env_file: ./api/graphql/.env.local
     restart: always
 
   database:

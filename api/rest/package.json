@@ -1,0 +1,29 @@
+{
+  "name": "api-rest",
+  "description": "",
+  "scripts": {
+    "start": "node --experimental-modules ./src/index.mjs",
+    "test": "jest"
+  },
+  "dependencies": {
+    "bcrypt": "3.0.8",
+    "compression": "1.7.4",
+    "cookie-parser": "1.4.5",
+    "cors": "2.8.5",
+    "esm": "3.2.25",
+    "express": "4.17.1",
+    "helmet": "3.21.3",
+    "pg": "7.18.2",
+    "pg-hstore": "2.3.3",
+    "sequelize": "5.21.5",
+    "uuid": "3.4.0",
+    "validator": "12.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.9.0",
+    "@babel/preset-env": "7.9.0",
+    "babel-jest": "24.9.0",
+    "jest": "24.9.0",
+    "request": "2.88.2"
+  }
+}
