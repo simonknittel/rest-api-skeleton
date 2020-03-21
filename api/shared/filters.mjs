@@ -1,4 +1,4 @@
-export function filterSingleUser(item) {
+export function filterUser(item) {
   return {
     id: item.id,
     createdAt: item.createdAt,

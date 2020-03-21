@@ -7,6 +7,7 @@ import config from '../config.mjs'
 // Models
 import User from '../models/User.mjs'
 
+import { filterUser } from '../filters.mjs'
 import triggerVerifyEmail from './triggerVerifyEmail.mjs'
 
 export default function signup(login, password) {
@@ -30,7 +31,9 @@ export default function signup(login, password) {
       })
       .then(createdUser => {
         triggerVerifyEmail(createdUser.id, createdUser.email)
-          .then(resolve)
+          .then(() => {
+            resolve(filterUser(createdUser.dataValues))
+          })
           .catch(err => reject(err))
       })
       .catch(err => {

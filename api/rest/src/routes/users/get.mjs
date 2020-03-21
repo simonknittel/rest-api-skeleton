@@ -1,4 +1,4 @@
-import { filterSingleUser } from '../../../../shared/filters.mjs'
+import { filterUser } from '../../../../shared/filters.mjs'
 
 // Models
 import User from '../../../../shared/models/User.mjs'
@@ -14,7 +14,7 @@ function get(id) {
     User
       .findOne({ where: { id } })
       .then(item => {
-        const filtered = filterSingleUser(item)
+        const filtered = filterUser(item)
         resolve(filtered)
       })
       .catch(err => reject({ id: 39, data: err }))

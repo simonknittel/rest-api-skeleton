@@ -16,4 +16,8 @@ type User {
 type Query {
   user(id: ID!): User
 }
+
+type Mutation {
+  signup(login: String!, password: String!): User
+}
 `
