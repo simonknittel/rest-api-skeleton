@@ -53,6 +53,7 @@ const server = new ApolloServer({
   },
   playground: true,
   introspection: true,
+  engine: { apiKey: config.apollo.engineApiKey },
 })
 
 server.applyMiddleware({ app })
