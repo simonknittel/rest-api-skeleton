@@ -1,4 +1,4 @@
-import error from '../../../../shared/methods/error.mjs'
+import error from '../../shared/error.mjs'
 import Session from '../../../../shared/models/Session.mjs'
 
 export default function logoutRoute(req, res) {

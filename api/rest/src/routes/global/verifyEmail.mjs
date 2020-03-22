@@ -1,4 +1,4 @@
-import error from '../../../../shared/methods/error.mjs'
+import error from '../../shared/error.mjs'
 import verifyEmail from '../../../../shared/methods/verifyEmail.mjs'
 
 export default function verifyEmailRoute(req, res) {

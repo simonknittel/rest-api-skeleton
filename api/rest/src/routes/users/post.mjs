@@ -6,7 +6,7 @@ import UserToken from '../../../../shared/models/UserToken.mjs'
 
 import config from '../../../../shared/config.mjs'
 
-import error from '../../../../shared/methods/error.mjs'
+import error from '../../shared/error.mjs'
 import Email from '../../../../shared/methods/email.mjs'
 import triggerVerifyEmail from '../../../../shared/methods/triggerVerifyEmail.mjs'
 

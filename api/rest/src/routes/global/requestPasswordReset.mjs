@@ -1,4 +1,4 @@
-import error from '../../../../shared/methods/error.mjs'
+import error from '../../shared/error.mjs'
 import requestPasswordReset from '../../../../shared/methods/requestPasswordReset.mjs'
 
 export default function requestPasswordResetRoute(req, res) {

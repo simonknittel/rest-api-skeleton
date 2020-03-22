@@ -1,6 +1,7 @@
 import signup from '../../shared/methods/signup.mjs'
 
 import { filterUser } from '../../shared/filters.mjs'
+import errorBasics from '../../shared/errorBasics.mjs'
 
 // Models
 import User from '../../shared/models/User.mjs'
@@ -20,6 +21,18 @@ export default {
     }
   },
   Mutation: {
-    signup: (_, { login, password }) => signup(login, password)
+    signup: (_, { login, password }) => {
+      return new Promise(resolve => {
+        signup(login, password)
+          .then(createdUser => {
+            resolve({ code: '', success: true, message: '', user: createdUser })
+          })
+          .catch(err => {
+            const error = errorBasics(err)
+            console.log(error)
+            resolve({ code: error.id, success: false, message: error.msg })
+          })
+      })
+    }
   }
 }

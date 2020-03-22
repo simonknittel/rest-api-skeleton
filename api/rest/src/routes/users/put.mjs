@@ -1,6 +1,6 @@
 import User from '../../../../shared/models/User.mjs'
 
-import error from '../../../../shared/methods/error.mjs'
+import error from '../../shared/error.mjs'
 import { isAllowedByUser } from '../../../../shared/methods/isAllowed.mjs'
 import triggerVerifyEmail from '../../../../shared/methods/triggerVerifyEmail.mjs'
 

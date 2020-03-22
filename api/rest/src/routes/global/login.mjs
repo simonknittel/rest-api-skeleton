@@ -1,5 +1,5 @@
 import config from '../../../../shared/config.mjs'
-import error from '../../../../shared/methods/error.mjs'
+import error from '../../shared/error.mjs'
 import login from '../../../../shared/methods/login.mjs'
 
 export default function loginRoute(req, res) {

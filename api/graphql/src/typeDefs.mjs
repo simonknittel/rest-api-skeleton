@@ -17,7 +17,20 @@ type Query {
   user(id: ID!): User
 }
 
+interface MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String
+}
+
+type SignupMutationResponse implements MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String
+  user: User
+}
+
 type Mutation {
-  signup(login: String!, password: String!): User
+  signup(login: String!, password: String!): SignupMutationResponse
 }
 `

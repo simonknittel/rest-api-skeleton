@@ -1,4 +1,4 @@
-import error from '../../../shared/methods/error.mjs'
+import error from '../shared/error.mjs'
 import authenticate from '../../../shared/methods/authenticate.mjs'
 
 export default function authenticateMiddleware(req, res, next) {

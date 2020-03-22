@@ -1,4 +1,4 @@
-import error from '../../../../shared/methods/error.mjs'
+import error from '../../shared/error.mjs'
 import signup from '../../../../shared/methods/signup.mjs'
 
 export default function signupRoute(req, res) {

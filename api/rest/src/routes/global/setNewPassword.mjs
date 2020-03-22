@@ -1,4 +1,4 @@
-import error from '../../../../shared/methods/error.mjs'
+import error from '../../shared/error.mjs'
 import setNewPassword from '../../../../shared/methods/setNewPassword.mjs'
 
 export default function setNewPasswordRoute(req, res) {
