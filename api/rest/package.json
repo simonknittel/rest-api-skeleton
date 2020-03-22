@@ -1,6 +1,7 @@
 {
   "name": "api-rest",
   "description": "",
+  "license": "MIT",
   "scripts": {
     "start": "node --experimental-modules ./src/index.mjs",
     "test": "jest"
@@ -25,5 +26,8 @@
     "babel-jest": "24.9.0",
     "jest": "24.9.0",
     "request": "2.88.2"
+  },
+  "prettier": {
+    "semi": false
   }
 }

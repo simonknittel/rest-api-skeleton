@@ -1,5 +1,5 @@
-import error from '../../shared/error.mjs'
-import Session from '../../../../shared/models/Session.mjs'
+import error from "../../shared/error.mjs"
+import Session from "../../../../shared/models/Session.mjs"
 
 export default function logoutRoute(req, res) {
   /**
@@ -15,12 +15,9 @@ export default function logoutRoute(req, res) {
     return
   }
 
-  Session
-    .destroy({ where: { token } })
+  Session.destroy({ where: { token } })
     .then(() => {
-      res
-        .clearCookie('session')
-        .end()
+      res.clearCookie("session").end()
     })
-    .catch(err => error({ id: 6 , data: err }, res))
+    .catch(err => error({ id: 6, data: err }, res))
 }

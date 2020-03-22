@@ -1,18 +1,29 @@
 {
   "name": "api-graphql",
   "description": "",
+  "license": "MIT",
   "scripts": {
-    "start": "node --experimental-modules ./src/index.mjs"
+    "start": "node --experimental-modules ./src/index.mjs",
+    "licenses": "npx license-checker --csv --out licenses.csv --customPath licensesFormat.json"
   },
   "dependencies": {
-    "apollo-server": "^2.11.0",
+    "apollo-server-express": "^2.11.0",
     "bcrypt": "3.0.8",
+    "compression": "1.7.4",
+    "cookie-parser": "1.4.5",
+    "cors": "2.8.5",
     "graphql": "^14.6.0",
+    "helmet": "3.21.3",
     "pg": "7.18.2",
     "pg-hstore": "2.3.3",
     "sequelize": "5.21.5",
     "uuid": "3.4.0",
     "validator": "12.2.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "prettier": "2.0.1"
+  },
+  "prettier": {
+    "semi": false
+  }
 }
