@@ -3,7 +3,9 @@
   "description": "",
   "scripts": {
     "start": "node --experimental-modules ./src/index.mjs",
-    "test": "jest"
+    "test": "jest",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "bcrypt": "3.0.8",
@@ -17,7 +19,8 @@
     "pg-hstore": "2.3.3",
     "sequelize": "5.21.7",
     "uuid": "3.4.0",
-    "validator": "12.2.0"
+    "validator": "12.2.0",
+    "snyk": "^1.317.0"
   },
   "devDependencies": {
     "@babel/core": "7.9.6",
@@ -25,5 +28,6 @@
     "babel-jest": "24.9.0",
     "jest": "24.9.0",
     "request": "2.88.2"
-  }
+  },
+  "snyk": true
 }
