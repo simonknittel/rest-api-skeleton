@@ -37,8 +37,12 @@ export function isAllowedByUser(user, requiredPermission) {
   if (user.permissionRole === 1) return true
 
   // Allowed via permission role
-  const whitelistedPermissions = user.whitelistedPermissions.split(',')
-  const blacklistedPermissions = user.blacklistedPermissions.split(',')
+  const whitelistedPermissions =
+    user.whitelistedPermissions ? user.whitelistedPermissions.split(',') : []
+
+  const blacklistedPermissions =
+    user.blacklistedPermissions ? user.blacklistedPermissions.split(',') : []
+
   if (roles[user.permissionRole].indexOf(requiredPermission) >= 0) {
     // Rejected via blacklisted permissions
     if (blacklistedPermissions && blacklistedPermissions.indexOf(requiredPermission) >= 0) {

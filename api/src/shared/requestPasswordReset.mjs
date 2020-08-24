@@ -1,5 +1,5 @@
 // Dependencies
-import uuidv4 from 'uuid/v4.js'
+import { v4 as uuidv4 } from 'uuid'
 
 // Models
 import User from '../models/User.mjs'

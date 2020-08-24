@@ -9,11 +9,11 @@ This is a project template/skeleton for creating a dockerized REST API with [Exp
 ## Features
 
 * Fully dockerized
-* User managament
+* User management
     * Signup/login/logout
     * Email verification and email change
     * Password reset
-    * Permission roles and invidiual whitelisted or blacklisted permissions
+    * Permission roles and individual whitelisted or blacklisted permissions
     * Sessions are handled via session ID's stored in cookies
     * For each session the user agent, if transmitted, and the time the user has been last seen is saved in the database
 * Method and middleware to require specific permissions

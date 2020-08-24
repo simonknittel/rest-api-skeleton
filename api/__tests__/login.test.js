@@ -1,85 +1,75 @@
-import request from 'request'
+import got from 'got'
 
 const BASE_URL = 'http://localhost:8000'
 
 describe('login', () => {
   test('successful login with user credentials', done => {
-    request({
-      url: `${BASE_URL}/login`,
+    got(`${BASE_URL}/login`, {
       method: 'POST',
-      form: { login: 'user', password: 'user' }
-    }, (err, res, body) => {
-      expect(err).toBeNull() // Check if there has been some connection error
-      expect(res.statusCode).toBeLessThan(400)
-      if (err || res.statusCode >= 400) {
-        done()
-        return
-      }
+      form: { login: 'hallo2@simonknittel.de', password: '12345' }
+    })
+      .then(({ body, statusCode }) => {
+        expect(statusCode).toBeLessThan(400)
+        if (statusCode >= 400) throw new Error('statusCode >= 400')
 
-      expect(body).toBeTruthy() // Check if token is in the body
+        expect(body).toBeTruthy() // Check if token is in the body
+        if (!body) throw new Error('body is not truthy')
 
-      const token = body;
-
-      request({
-        url: `${BASE_URL}/authenticated`,
-        headers: { Authorization: 'Bearer ' + token }
-      }, (err, res) => {
-        expect(err).toBeNull() // Check if there has been some connection error
-        expect(res.statusCode).toBeLessThan(400) // Check if the user has the correct permissions
-        if (err || res.statusCode >= 400) {
-          done()
-          return
-        }
-
-        request({
-          url: `${BASE_URL}/admin-secured`,
-          headers: { Authorization: 'Bearer ' + token }
-        }, (err, res) => {
-          expect(err).toBeNull() // Check if there has been some connection error
-          expect(res.statusCode).toBe(401) // Check if the user has the correct permissions
-          done()
+        return got(`${BASE_URL}/authenticated`, {
+          headers: { Authorization: 'Bearer ' + body }
         })
       })
-    })
+      .then(({ statusCode }) => {
+        expect(statusCode).toBeLessThan(400) // Check if the user has the correct permissions
+        if (statusCode >= 400) throw new Error('statusCode >= 400')
+
+        return got(`${BASE_URL}/admin-secured`, {
+          headers: { Authorization: 'Bearer ' + token }
+        })
+      })
+      .then(({ statusCode }) => {
+        expect(statusCode).toBe(401) // Check if the user has the correct permissions
+        if (statusCode !== 401) throw new Error('statusCode !== 401')
+
+        done()
+      })
+      .catch(err => {
+        done(err)
+      })
   })
 
   test('successful login with admin credentials', done => {
-    request({
-      url: `${BASE_URL}/login`,
+    got(`${BASE_URL}/login`, {
       method: 'POST',
       form: { login: 'admin', password: 'admin' }
-    }, (err, res, body) => {
-      expect(err).toBeNull() // Check if there has been some connection error
-      expect(res.statusCode).toBeLessThan(400)
-      if (err || res.statusCode >= 400) {
-        done()
-        return
-      }
+    })
+      .then(({ body, statusCode }) => {
+        expect(statusCode).toBeLessThan(400)
+        if (statusCode >= 400) throw new Error('statusCode >= 400')
 
-      expect(body).toBeTruthy() // Check if token is in the body
+        expect(body).toBeTruthy() // Check if token is in the body
+        if (!body) throw new Error('body is not truthy')
 
-      const token = body;
-
-      request({
-        url: `${BASE_URL}/authenticated`,
-        headers: { Authorization: 'Bearer ' + token }
-      }, (err, res) => {
-        expect(err).toBeNull() // Check if there has been some connection error
-        expect(res.statusCode).toBeLessThan(400) // Check if the user has the correct permissions
-        if (err || res.statusCode >= 400) {
-          done()
-          return
-        }
-
-        request({
-          url: `${BASE_URL}/admin-secured`,
-          headers: { Authorization: 'Bearer ' + token }
-        }, (err, res) => {
-          expect(err).toBeNull() // Check if there has been some connection error
-          expect(res.statusCode).toBeLessThan(400) // Check if the user has the correct permissions
-          done()
+        return got(`${BASE_URL}/authenticated`, {
+          headers: { Authorization: 'Bearer ' + body }
         })
       })
-    })
+      .then(({ statusCode }) => {
+        expect(statusCode).toBeLessThan(400) // Check if the user has the correct permissions
+        if (statusCode >= 400) throw new Error('statusCode >= 400')
+
+        return got(`${BASE_URL}/admin-secured`, {
+          headers: { Authorization: 'Bearer ' + token }
+        })
+      })
+      .then(({ statusCode }) => {
+        expect(statusCode).toBeLessThan(400) // Check if the user has the correct permissions
+        if (statusCode >= 400) throw new Error('statusCode >= 400')
+
+        done()
+      })
+      .catch(err => {
+        done(err)
+      })
   })
 })

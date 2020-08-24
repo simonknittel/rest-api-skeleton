@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import uuidv4 from 'uuid/v4.js'
+import { v4 as uuidv4 } from 'uuid'
 
 import User from '../../models/User.mjs'
 import UserToken from '../../models/UserToken.mjs'

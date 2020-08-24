@@ -23,15 +23,9 @@ app.use(cookieParser(config.session.secret))
 
 // TODO: Maybe replace with individual dependencies
 app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"]
-    }
-  },
   referrerPolicy: {
     policy: 'same-origin'
-  },
-  noCache: {}
+  }
 }))
 
 app.use(cors({
