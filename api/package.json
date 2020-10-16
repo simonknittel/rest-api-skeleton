@@ -20,7 +20,7 @@
     "validator": "13.1.17"
   },
   "devDependencies": {
-    "@babel/core": "7.12.1",
+    "@babel/core": "7.12.3",
     "@babel/preset-env": "7.12.1",
     "babel-jest": "26.5.2",
     "got": "11.7.0",
