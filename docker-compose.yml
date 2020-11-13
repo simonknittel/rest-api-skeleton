@@ -10,7 +10,7 @@ services:
     restart: always
 
   database:
-    image: postgres:12.4-alpine
+    image: postgres:12.5-alpine
     environment:
       POSTGRES_PASSWORD: postgres
     ports:
